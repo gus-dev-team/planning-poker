@@ -1,17 +1,24 @@
 import "./App.css";
 
+import Layout from "./Layout";
+
 import Empty from "./components/Empty";
 import Entrance from "./components/Entrance";
 import Table from "./components/Table";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 function App() {
   return (
-    <div>
-      <h1>App</h1>
-      <Empty />
-      <Entrance />
-      <Table />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Entrance />}/>
+          <Route path="/table" element={<Table />}/>
+          <Route path="*" element={<Empty />}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
