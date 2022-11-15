@@ -1,3 +1,4 @@
+// §TEST
 import mongoose from "mongoose";
 
 const tableSchema = mongoose.Schema({
