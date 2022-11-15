@@ -48,7 +48,11 @@ function JoinTable(props) {
       })();
     }
     // When the timer is running, the page renders every second.
-    // The second parameter here is to prevent the focus being stuck on the input element.
+    // To avoid the rendering of the whole page at each second and,
+    // consequently the focus of the page being stuck at the form input,
+    // formStatus is passed as a parameter to useEffect
+    // which in turn will be called only when there is a change in the
+    // value of formStatus.
   }, [formStatus]);
 
   function handleChange(e) {
