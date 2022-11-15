@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import "./styles/Seats.css";
 
-export default function Seats() {
+export default function Seats(props) {
   const [seatedPlayers, setSeatedPlayers] = useState([]);
 
   useEffect(() => {}, [seatedPlayers]);
 
   const sitPlayerDown = (name) => {
     setSeatedPlayers([...seatedPlayers, { name: name, UUID: nanoid() }]);
+    props.toggleSeatStatus();
   };
 
   return (
@@ -40,6 +41,14 @@ function Form(props) {
   // If formStatus is 'false', then the form is hidden.
   const [formStatus, setFormStatus] = useState(false);
   const [playerName, setPlayerName] = useState("");
+
+  useEffect(() => {
+    if (formStatus) {
+      (function () {
+        document.getElementById("name-input").focus();
+      })();
+    }
+  });
 
   function handleChange(e) {
     setPlayerName(e.target.value);
