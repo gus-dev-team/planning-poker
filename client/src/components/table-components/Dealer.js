@@ -3,53 +3,32 @@ import convertSecondstoTime from "../../utils/timeConversor.js";
 import "./styles/Dealer.css";
 
 export default function Dealer(props) {
-  const [issue, setIssue] = useState("set the table's issue");
-  const [timer, setTimer] = useState(3600);
-
-  useEffect(() => {
-    if (props.seatStatus) {
-      const timerID = setInterval(() => setTimer(timer - 1), 1000);
-      return function cleanup() {
-        clearInterval(timerID);
-      };
-    }
-  }, [timer, props.seatStatus]);
-
-  function resetTimer() {
-    setTimer(3600);
-  }
-
-  function changeIssue(string) {
-    setIssue(string);
-  }
-
   return (
     <div>
-      <Form
-        onConfirmation={changeIssue}
-        issue={issue}
+      <IssueForm
+        onConfirmation={props.setIssue}
+        issue={props.issue}
         isDisabled={!props.seatStatus}
       />
 
-      <div>
-        <strong>Time left</strong> {convertSecondstoTime(timer)}
-        <button onClick={resetTimer}>reset</button>
-      </div>
+      <Timer duration={props.duration} status={props.seatStatus} />
     </div>
   );
 }
 
-function Form(props) {
+function IssueForm(props) {
   const [formStatus, setFormStatus] = useState(false);
   const [issue, setIssue] = useState("");
 
   useEffect(() => {
-    if (formStatus) {
+    if (formStatus && document.getElementById("issue-input")) {
       (function () {
         document.getElementById("issue-input").focus();
       })();
     }
-  });
+    // When the timer is running, the page renders every second.
+    // The second parameter here is to prevent the focus being stuck on the input element.
+  }, [formStatus]);
 
   function handleChange(e) {
     setIssue(e.target.value);
@@ -75,7 +54,7 @@ function Form(props) {
               autoComplete="off"
               placeholder="Enter the proposed issue..."
               value={issue}
-              onChange={handleChange} // Pede um parâmetro onChange ou readOnly.
+              onChange={handleChange}
             />
             <button type="submit">ok</button>
           </form>
@@ -88,6 +67,32 @@ function Form(props) {
           {props.issue}
         </button>
       )}
+    </div>
+  );
+}
+
+function Timer(props) {
+  const [timer, setTimer] = useState(props.duration);
+
+  useEffect(() => {
+    if (props.status) {
+      const timerID = setInterval(() => setTimer(timer - 1), 1000);
+      return function cleanup() {
+        clearInterval(timerID);
+      };
+    }
+  }, [timer, props.status]);
+
+  function resetTimer() {
+    setTimer(props.duration);
+  }
+
+  return (
+    <div>
+      <p>
+        Time left <button onClick={resetTimer}>reset</button>
+      </p>
+      <p>{convertSecondstoTime(timer)}</p>
     </div>
   );
 }

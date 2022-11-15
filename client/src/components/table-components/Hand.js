@@ -1,6 +1,6 @@
 import "./styles/Hand.css";
 
-export default function Hand() {
+export default function Hand(props) {
   // List of the value of each card in hand.
   const values = [
     "0",
@@ -17,13 +17,21 @@ export default function Hand() {
     "?",
   ];
 
-  const handOfCards = values.map((value) => {
-    return <Card key={value} name={value} />;
+  const cards = values.map((value) => {
+    return <Card key={value} name={value} onPicking={props.changeStatus} />;
   });
 
-  return <div className="hand-of-cards">{handOfCards}</div>;
+  return <div className="cards">{cards}</div>;
 }
 
 function Card(props) {
-  return <button type="button">{props.name}</button>;
+  return (
+    <button
+      type="button"
+      onClick={props.onPicking(props.name)}
+      className="card"
+    >
+      {props.name}
+    </button>
+  );
 }
