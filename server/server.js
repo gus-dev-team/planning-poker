@@ -19,6 +19,41 @@ server.get("/", (req, res) => {
   res.status(200).json({ success: true, data: [] });
 });
 
-server.listen(5000, () => {
-  console.log("Server is listening on port 5000...");
+// server.listen(5000, () => {
+//   console.log("Server is listening on port 5000...");
+// });
+
+//
+// const io = require("socket.io")({
+//   cors: {
+//     origin: ["http://localhost:3000"],
+//   },
+// });
+
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+const httpServer = createServer();
+const io = new Server(httpServer, {
+  cors: {
+    origin: ["http://localhost:3000"],
+  },
 });
+
+io.on("connection", (socket) => {
+  console.log(`connect: ${socket.id}`);
+
+  socket.on("hello!", () => {
+    console.log(`hello from ${socket.id}`);
+  });
+
+  socket.on("disconnect", () => {
+    console.log(`disconnect: ${socket.id}`);
+  });
+});
+
+io.listen(5000);
+
+setInterval(() => {
+  io.emit("message", new Date().toISOString());
+}, 1000);

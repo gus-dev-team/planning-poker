@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-// import "./styles/Test.css";
 import axios from "axios";
+import io from "socket.io-client";
+
+const socket = io("localhost:5000");
 
 function Test() {
   const [state, setState] = useState([]);
 
   useEffect(() => {
-    (async function () {
+    (async function() {
       const { data } = await axios.get("api/tests");
       setState(data);
     })();
