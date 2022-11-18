@@ -14,7 +14,7 @@ export default function Seats(props) {
 
       <SeatedPlayers list={props.seatedPlayers} />
 
-      <JoinTable onConfirmation={props.sitPlayerDown} />
+      <JoinTable onConfirmation={props.joinTable} />
     </div>
   );
 }
@@ -26,7 +26,7 @@ function SeatedPlayers(props) {
         return (
           <li
             className={"player" + (player.card ? "-ready" : "")}
-            key={player.UUID}
+            key={player.ID}
           >
             {player.name}
           </li>
@@ -47,12 +47,6 @@ function JoinTable(props) {
         document.getElementById("name-input").focus();
       })();
     }
-    // When the timer is running, the page renders every second.
-    // To avoid the rendering of the whole page at each second and,
-    // consequently the focus of the page being stuck at the form input,
-    // formStatus is passed as a parameter to useEffect
-    // which in turn will be called only when there is a change in the
-    // value of formStatus.
   }, [formStatus]);
 
   function handleChange(e) {

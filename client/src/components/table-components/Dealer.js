@@ -8,10 +8,13 @@ export default function Dealer(props) {
       <IssueForm
         onConfirmation={props.setIssue}
         issue={props.issue}
-        isDisabled={!props.seatStatus}
+        // isDisabled={!props.seatStatus}
       />
 
-      <Timer duration={props.duration} status={props.seatStatus} />
+      <Timer
+        duration={props.roundDuration}
+        // status={props.seatStatus}
+      />
     </div>
   );
 }

@@ -20,24 +20,65 @@ app.use(express.urlencoded({ extended: false })); // Why use this?
 app.use(express.json()); // JSON parser.
 app.use(logger);
 
-// §TEST
+// §TEST //////////////////////////////////////////////
 import testingRouter from "./testing/testingRouter.js";
-app.use("/api/tests/", testingRouter);
+app.use("/api/tests/", testingRouter); ////////////////
+///////////////////////////////////////////////////////
 
 app.get("/", (req, res) => {
   res.status(200).json({ success: true, data: [] });
 });
 
+// Finish this...
+app.get("/api/tables/", async (req, res) => {
+  try {
+    const data = await Table.find({});
+    res.status(200).json(data);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+app.get("/api/tables/:ID", async (req, res) => {
+  try {
+    const { ID } = req.params;
+    const data = await Table.find({});
+    const specificTable = data.find((table) => table.ID === ID);
+    res.status(200).json(specificTable);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+app.post("/api/tables/:ID", async (req, res) => {
+  console.log(req.body);
+
+  const { ID, name, card } = req.body;
+
+  await Table.updateOne(
+    { ID: req.params.ID },
+    { $push: { players: { ID, name, card } } }
+  );
+
+  res.status(201).send({ success: true, data: [] });
+});
+
 io.on("connection", (socket) => {
   console.log(`connect: ${socket.id}`);
 
-  socket.on("post!", () => {
-    console.log(`hello from ${socket.id}`);
-    io.emit("message", "message received"); // troquei io por socket... ??? será que vai dar pau?
-  });
-
   socket.on("disconnect", () => {
     console.log(`disconnect: ${socket.id}`);
+  });
+
+  socket.on("update-players", () => {
+    console.log(`update signal: ${socket.id}...`);
+    io.emit("update", `update signal`);
+  });
+
+  // §TEST
+  socket.on("post!", () => {
+    console.log(`hello from ${socket.id}`);
+    io.emit("message", "message received..."); // I've switch 'socket.emit' to 'io.emit' and everything worked.
   });
 });
 

@@ -18,7 +18,7 @@ export default function Hand(props) {
   ];
 
   const cards = values.map((value) => {
-    return <Card key={value} name={value} onPicking={props.changeStatus} />;
+    return <Card key={value} name={value} play={props.play} />;
   });
 
   return <div className="cards">{cards}</div>;
@@ -28,7 +28,7 @@ function Card(props) {
   return (
     <button
       type="button"
-      onClick={props.onPicking(props.name)}
+      onClick={() => props.play(props.name)}
       className="card"
     >
       {props.name}
