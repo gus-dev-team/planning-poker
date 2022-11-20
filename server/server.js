@@ -2,7 +2,7 @@ import express from "express";
 import connectToDatabase from "./database/database.js";
 import logger from "./utils/logger.js";
 import Table from "./models/tableModel.js";
-
+import { nanoid } from "nanoid";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ success: true, data: [] });
 });
 
-// Finish this...
+// get tables list
 app.get("/api/tables/", async (req, res) => {
   try {
     const data = await Table.find({});
@@ -37,6 +37,22 @@ app.get("/api/tables/", async (req, res) => {
   } catch (err) {
     console.error(err);
   }
+});
+
+// creates new table...
+app.post("/api/tables/new", async (req, res) => {
+  const { ID } = req.body;
+  const newTable = new Table({ ID: ID });
+  await newTable.save(function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(result);
+    }
+  });
+
+  io.emit("update", `update signal`);
+  res.status(200).json({ success: true, data: [] });
 });
 
 app.get("/api/tables/:ID", async (req, res) => {
@@ -50,9 +66,8 @@ app.get("/api/tables/:ID", async (req, res) => {
   }
 });
 
+// updates the player list...
 app.post("/api/tables/:ID", async (req, res) => {
-  console.log(req.body);
-
   const { ID, name, card } = req.body;
 
   await Table.updateOne(
@@ -85,9 +100,3 @@ io.on("connection", (socket) => {
 server.listen(5000, () => {
   console.log("Server is listening on port 5000...");
 });
-
-// io.listen(5000);
-
-// setInterval(() => {
-//   io.emit("message", new Date().toISOString());
-// }, 1000);

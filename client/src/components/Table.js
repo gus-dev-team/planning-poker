@@ -1,34 +1,34 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import "./styles/Table.css";
-
 import axios from "axios";
 import io from "socket.io-client";
-
 import Dealer from "./table-components/Dealer";
 import Hand from "./table-components/Hand";
 import Seats from "./table-components/Seats";
 
 const socket = io("localhost:5000");
 
-const fixedTemporaryID = "023";
+// const anotherID = "023";
 
 function Table() {
+  const { ID } = useParams();
   const [isConnected, setIsConnected] = useState(socket.connected);
 
   useEffect(() => {
-    setTable();
+    setTable(ID);
 
     socket.on("connect", () => {
       setIsConnected(true);
-      setTable();
+      setTable(ID);
     });
     socket.on("disconnect", () => {
       setIsConnected(false);
     });
 
     socket.on("update", () => {
-      setTable();
+      setTable(ID);
     });
 
     return () => {
@@ -42,17 +42,15 @@ function Table() {
   const [roundDuration, setRoundDuration] = useState(3600);
   const [seatedPlayers, setSeatedPlayers] = useState([]);
 
-  async function setTable() {
-    const { data } = await axios.get(
-      `/api/tables/${fixedTemporaryID}` // temporary
-    );
+  async function setTable(ID) {
+    const { data } = await axios.get(`/api/tables/${ID}`);
     setIssue(data.issue);
     setRoundDuration(data.time);
     setSeatedPlayers(data.players);
   }
 
   async function addPlayer(playerName) {
-    await axios.post(`/api/tables/${fixedTemporaryID}`, {
+    await axios.post(`/api/tables/${ID}`, {
       ID: `${nanoid()}`,
       name: playerName,
       card: "",
