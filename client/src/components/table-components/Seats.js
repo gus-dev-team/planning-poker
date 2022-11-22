@@ -2,37 +2,38 @@ import "../../App.css";
 import React, { useEffect, useState } from "react";
 
 export default function Seats(props) {
+  const [seatStatus, setSeatStatus] = useState(false);
+  // 'true' means 'occupied' by the current user
+
+  const [userName, setUserName] = useState("");
+  // 'userName' is the name set by the current user on the browser
+  // and it is defined when the user first joins the current table
+
   useEffect(() => {}, [props.seatedPlayers]);
+
+  function leaveTable() {
+    //
+  }
 
   return (
     <div className='seats'>
-      {!props.seatedPlayers || props.seatedPlayers.length < 1 ? (
-        <p>Nobody is here...</p>
+      <SeatedPlayers
+        list={props.seatedPlayers || []}
+        seatedPlayers={props.seatedPlayers}
+      />
+
+      {seatStatus ? (
+        <button onClick={leaveTable}>
+          <span class='material-icons'>logout</span>
+          {/* <span>leave</span> */}
+        </button>
       ) : (
-        <p>Players seated...</p>
+        <JoinTable
+          onConfirmation={props.joinTable}
+          toggleSeatStatus={() => setSeatStatus(!seatStatus)}
+        />
       )}
-
-      <SeatedPlayers list={props.seatedPlayers || []} />
-
-      <JoinTable onConfirmation={props.joinTable} />
     </div>
-  );
-}
-
-function SeatedPlayers(props) {
-  return (
-    <ul className='player-list'>
-      {props.list.map((player) => {
-        return (
-          <li
-            className={"player" + (player.card ? "-ready" : "")}
-            key={player.ID}
-          >
-            {player.name}
-          </li>
-        );
-      })}
-    </ul>
   );
 }
 
@@ -58,29 +59,57 @@ function JoinTable(props) {
     props.onConfirmation(playerName);
     setPlayerName("");
     setFormStatus(false);
+    props.toggleSeatStatus();
   }
 
   return (
     <div>
       {formStatus ? (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor='name-input'>player name</label>
-            <input
-              type='text'
-              id='name-input'
-              name='name'
-              autoComplete='off'
-              placeholder='enter your username'
-              value={playerName}
-              onChange={handleChange}
-            />
-            <button type='submit'>sit</button>
-          </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor='name-input'>player name</label>
+          <input
+            type='text'
+            id='name-input'
+            name='name'
+            autoComplete='off'
+            placeholder='enter your username'
+            value={playerName}
+            onChange={handleChange}
+          />
+          <button type='submit'>sit</button>
+        </form>
       ) : (
-        <button onClick={() => setFormStatus(!formStatus)}>join table</button>
+        <button onClick={() => setFormStatus(!formStatus)}>
+          <span class='material-icons'>login</span>
+          {/* <span>join table</span> */}
+        </button>
       )}
     </div>
+  );
+}
+
+function SeatedPlayers(props) {
+  return (
+    <ul>
+      {!props.seatedPlayers || props.seatedPlayers.length < 1 ? (
+        <div>This table is empty...</div>
+      ) : (
+        <div>players seated</div>
+      )}
+
+      {/* This is called conditional rendering... */}
+      {/* It works because in JavaScript, true && expression always evaluates to expression, and false && expression always evaluates to false. */}
+      {(props.seatedPlayers || props.seatedPlayers.length >= 1) &&
+        props.list.map((player) => {
+          return (
+            <li
+              className={"player" + (player.card ? "-ready" : "")} // not currently in use
+              key={player.ID}
+            >
+              {player.name}
+            </li>
+          );
+        })}
+    </ul>
   );
 }

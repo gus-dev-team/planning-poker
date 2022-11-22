@@ -98,8 +98,12 @@ function Timer(props) {
     <div className='timer'>
       <div>{convertSecondstoTime(timer)}</div>
       <div>
-        <button onClick={toggleTimer}>play</button>
-        <button onClick={resetTimer}>reset</button>
+        <button onClick={toggleTimer}>
+          <span class='material-icons'>play_arrow</span>
+        </button>
+        <button onClick={resetTimer}>
+          <span class='material-icons'>replay</span>
+        </button>
       </div>
     </div>
   );

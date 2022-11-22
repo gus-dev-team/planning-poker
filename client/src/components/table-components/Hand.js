@@ -26,11 +26,7 @@ export default function Hand(props) {
 
 function Card(props) {
   return (
-    <button
-      type='button'
-      onClick={() => props.play(props.name)}
-      className='card'
-    >
+    <button className='card' onClick={() => props.play(props.name)}>
       {props.name}
     </button>
   );
