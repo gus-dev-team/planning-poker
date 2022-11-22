@@ -1,4 +1,4 @@
-import "./styles/Hand.css";
+import "../../App.css";
 
 export default function Hand(props) {
   // List of the value of each card in hand.
@@ -21,15 +21,15 @@ export default function Hand(props) {
     return <Card key={value} name={value} play={props.play} />;
   });
 
-  return <div className="cards">{cards}</div>;
+  return <div className='hand'>{cards}</div>;
 }
 
 function Card(props) {
   return (
     <button
-      type="button"
+      type='button'
       onClick={() => props.play(props.name)}
-      className="card"
+      className='card'
     >
       {props.name}
     </button>

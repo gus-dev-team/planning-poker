@@ -1,18 +1,18 @@
+import "../../App.css";
 import React, { useEffect, useState } from "react";
-import "./styles/Seats.css";
 
 export default function Seats(props) {
   useEffect(() => {}, [props.seatedPlayers]);
 
   return (
-    <div>
-      {props.seatedPlayers.length < 1 ? (
+    <div className='seats'>
+      {!props.seatedPlayers || props.seatedPlayers.length < 1 ? (
         <p>Nobody is here...</p>
       ) : (
         <p>Players seated...</p>
       )}
 
-      <SeatedPlayers list={props.seatedPlayers} />
+      <SeatedPlayers list={props.seatedPlayers || []} />
 
       <JoinTable onConfirmation={props.joinTable} />
     </div>
@@ -21,7 +21,7 @@ export default function Seats(props) {
 
 function SeatedPlayers(props) {
   return (
-    <ul className="player-list">
+    <ul className='player-list'>
       {props.list.map((player) => {
         return (
           <li
@@ -65,17 +65,17 @@ function JoinTable(props) {
       {formStatus ? (
         <div>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="name-input">player name</label>
+            <label htmlFor='name-input'>player name</label>
             <input
-              type="text"
-              id="name-input"
-              name="name"
-              autoComplete="off"
-              placeholder="enter your username"
+              type='text'
+              id='name-input'
+              name='name'
+              autoComplete='off'
+              placeholder='enter your username'
               value={playerName}
               onChange={handleChange}
             />
-            <button type="submit">sit</button>
+            <button type='submit'>sit</button>
           </form>
         </div>
       ) : (

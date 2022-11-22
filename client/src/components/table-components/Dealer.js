@@ -1,11 +1,12 @@
+import "../../App.css";
 import React, { useState, useEffect } from "react";
 import convertSecondstoTime from "../../utils/timeConversor.js";
 import "./styles/Dealer.css";
 
 export default function Dealer(props) {
   return (
-    <div>
-      <IssueForm
+    <div className='dealer'>
+      <Issue
         onConfirmation={props.setIssue}
         issue={props.issue}
         // isDisabled={!props.seatStatus}
@@ -19,7 +20,7 @@ export default function Dealer(props) {
   );
 }
 
-function IssueForm(props) {
+function Issue(props) {
   const [formStatus, setFormStatus] = useState(false);
   const [issue, setIssue] = useState("");
 
@@ -44,31 +45,32 @@ function IssueForm(props) {
     setFormStatus(false);
   }
 
+  function toggleForm() {
+    if (!formStatus) {
+      setFormStatus(!formStatus);
+    }
+  }
+
   return (
-    <div>
+    <div className='issue' onClick={toggleForm}>
       {formStatus ? (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="issue-input">new issue</label>
-            <input
-              type="text"
-              id="issue-input"
-              name="name"
-              autoComplete="off"
-              placeholder="Enter the proposed issue..."
-              value={issue}
-              onChange={handleChange}
-            />
-            <button type="submit">ok</button>
-          </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+          {/* <label htmlFor='issue-input'>new issue</label> */}
+          <input
+            type='text'
+            id='issue-input'
+            name='name'
+            autoComplete='off'
+            placeholder='Enter the proposed issue...'
+            value={issue}
+            onChange={handleChange}
+          />
+          <button type='submit' style={{ display: "none" }}>
+            ok
+          </button>
+        </form>
       ) : (
-        <button
-          onClick={() => setFormStatus(!formStatus)}
-          disabled={props.isDisabled}
-        >
-          {props.issue}
-        </button>
+        <div>{props.issue}</div>
       )}
     </div>
   );
@@ -86,16 +88,19 @@ function Timer(props) {
     }
   }, [timer, props.status]);
 
+  function toggleTimer() {}
+
   function resetTimer() {
     setTimer(props.duration);
   }
 
   return (
-    <div>
-      <p>
-        Time left <button onClick={resetTimer}>reset</button>
-      </p>
-      <p>{convertSecondstoTime(timer)}</p>
+    <div className='timer'>
+      <div>{convertSecondstoTime(timer)}</div>
+      <div>
+        <button onClick={toggleTimer}>play</button>
+        <button onClick={resetTimer}>reset</button>
+      </div>
     </div>
   );
 }

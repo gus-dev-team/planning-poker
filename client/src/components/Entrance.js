@@ -1,7 +1,15 @@
-import "./styles/Entrance.css";
+import { Link } from "react-router-dom";
 
-function Entrance() {
-  return <div>Entrance</div>;
+export default function Entrance(props) {
+  return (
+    <div className='entrance'>
+      <div className='new-table-button' onClick={props.getNewTable}>
+        <Link to={`/tables/${props.ID}`} onClick={props.getNewTable(props.ID)}>
+          new
+          <br></br>
+          table
+        </Link>
+      </div>
+    </div>
+  );
 }
-
-export default Entrance;

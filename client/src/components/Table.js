@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
-import "./styles/Table.css";
 import axios from "axios";
 import io from "socket.io-client";
 import Dealer from "./table-components/Dealer";
@@ -10,21 +9,20 @@ import Seats from "./table-components/Seats";
 
 const socket = io("localhost:5000");
 
-// const anotherID = "023";
-
 function Table() {
   const { ID } = useParams();
-  const [isConnected, setIsConnected] = useState(socket.connected);
+  // const [isConnected, setIsConnected] = useState(socket.connected);
 
   useEffect(() => {
     setTable(ID);
 
     socket.on("connect", () => {
-      setIsConnected(true);
+      // setIsConnected(true);
       setTable(ID);
     });
+
     socket.on("disconnect", () => {
-      setIsConnected(false);
+      // setIsConnected(false);
     });
 
     socket.on("update", () => {
@@ -36,7 +34,7 @@ function Table() {
       socket.off("disconnect");
       socket.off("update");
     };
-  }, []);
+  }, [ID]);
 
   const [issue, setIssue] = useState("");
   const [roundDuration, setRoundDuration] = useState(3600);
@@ -64,15 +62,13 @@ function Table() {
 
   return (
     <div>
-      <h2>Table</h2>
-      <button onClick={addPlayer}>testing</button>
       <Dealer
         issue={issue}
         setIssue={(string) => setIssue(string)}
         roundDuration={roundDuration}
       />
-      <Hand play={play} />
       <Seats seatedPlayers={seatedPlayers} joinTable={addPlayer} />
+      <Hand play={play} />
     </div>
   );
 }
