@@ -94,14 +94,21 @@ function SeatedPlayers(props) {
       )}
 
       {/* This is called conditional rendering... */}
-      {/* It works because in JavaScript, true && expression always evaluates to expression, and false && expression always evaluates to false. */}
+      {/* It works because in JavaScript,
+      true && expression always evaluates to expression,
+      and false && expression always evaluates to false. */}
       {(props.seatedPlayers || props.seatedPlayers.length >= 1) &&
         props.list.map((player) => {
           return (
             <li
-              className={"player" + (player.card ? "-ready" : "")} // not currently in use
+              // className={"player" + (player.card ? "-ready" : "")} // not currently in use
               key={player.ID}
             >
+              {player.card ? (
+                <span class='material-icons'>check_circle</span>
+              ) : (
+                <span class='material-icons'>radio_button_unchecked</span>
+              )}
               {player.name}
             </li>
           );

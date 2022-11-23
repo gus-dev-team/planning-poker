@@ -47,7 +47,7 @@ function Table() {
       socket.off("disconnect");
       socket.off("update");
     };
-  }, [ID]);
+  }, [ID, playedCard]);
 
   async function setTable(ID) {
     const { data } = await axios.get(`/api/tables/${ID}`);
@@ -84,7 +84,7 @@ function Table() {
         roundDuration={roundDuration}
       />
       <Seats seatedPlayers={seatedPlayers} joinTable={addPlayer} />
-      <Hand play={play} playedCard={playedCard} />
+      <Hand play={play} playedCard={playedCard} seatedPlayers={seatedPlayers} />
     </div>
   );
 }
