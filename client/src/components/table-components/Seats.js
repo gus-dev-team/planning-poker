@@ -5,11 +5,7 @@ export default function Seats(props) {
   const [seatStatus, setSeatStatus] = useState(false);
   // 'true' means 'occupied' by the current user
 
-  const [userName, setUserName] = useState("");
-  // 'userName' is the name set by the current user on the browser
-  // and it is defined when the user first joins the current table
-
-  useEffect(() => {}, [props.seatedPlayers]);
+  // useEffect(() => {}, [props.seatedPlayers]);
 
   function leaveTable() {
     //
@@ -24,7 +20,7 @@ export default function Seats(props) {
 
       {seatStatus ? (
         <button onClick={leaveTable}>
-          <span class='material-icons'>logout</span>
+          <span className='material-icons'>logout</span>
           {/* <span>leave</span> */}
         </button>
       ) : (
@@ -80,7 +76,7 @@ function JoinTable(props) {
         </form>
       ) : (
         <button onClick={() => setFormStatus(!formStatus)}>
-          <span class='material-icons'>login</span>
+          <span className='material-icons'>login</span>
           {/* <span>join table</span> */}
         </button>
       )}

@@ -2,7 +2,6 @@ import express from "express";
 import connectToDatabase from "./database/database.js";
 import logger from "./utils/logger.js";
 import Table from "./models/tableModel.js";
-import { nanoid } from "nanoid";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
@@ -75,6 +74,21 @@ app.post("/api/tables/:ID", async (req, res) => {
     { $push: { players: { ID, name, card } } }
   );
 
+  res.status(201).send({ success: true, data: [] });
+});
+
+// play card
+app.post("/api/tables/:ID/:playerID", async (req, res) => {
+  console.log(req.params, req.body);
+
+  await Table.updateOne(
+    { ID: req.params.ID, "players.ID": req.params.playerID },
+    {
+      $set: {
+        "players.$.card": req.body.card,
+      },
+    }
+  );
   res.status(201).send({ success: true, data: [] });
 });
 

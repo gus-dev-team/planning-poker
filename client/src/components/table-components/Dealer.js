@@ -99,10 +99,10 @@ function Timer(props) {
       <div>{convertSecondstoTime(timer)}</div>
       <div>
         <button onClick={toggleTimer}>
-          <span class='material-icons'>play_arrow</span>
+          <span className='material-icons'>play_arrow</span>
         </button>
         <button onClick={resetTimer}>
-          <span class='material-icons'>replay</span>
+          <span className='material-icons'>replay</span>
         </button>
       </div>
     </div>
