@@ -247,6 +247,10 @@ button:hover {
   box-shadow: 1px 1px 2px var(--prussian-blue);
 }
 
+.card-selected {
+  background-color: blueviolet;
+}
+
 .card:hover {
   color: var(--honeydew);
 

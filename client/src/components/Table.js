@@ -15,13 +15,16 @@ const userID = nanoid();
 function Table() {
   const { ID } = useParams(); // ID is the table ID
 
-  console.log("this is the current user ID:", userID);
-
   const [userName, setUserName] = useState("");
+  const [playedCard, setPlayedCard] = useState("");
   // 'userName' is the name set by the current user on the browser
   // and it is defined when the user first joins the current table
+  // same for playedCard...
 
   // const [isConnected, setIsConnected] = useState(socket.connected);
+  const [issue, setIssue] = useState("");
+  const [roundDuration, setRoundDuration] = useState(0);
+  const [seatedPlayers, setSeatedPlayers] = useState([]);
 
   useEffect(() => {
     setTable(ID);
@@ -46,10 +49,6 @@ function Table() {
     };
   }, [ID]);
 
-  const [issue, setIssue] = useState("");
-  const [roundDuration, setRoundDuration] = useState(3600);
-  const [seatedPlayers, setSeatedPlayers] = useState([]);
-
   async function setTable(ID) {
     const { data } = await axios.get(`/api/tables/${ID}`);
     setIssue(data.issue);
@@ -67,14 +66,14 @@ function Table() {
     setUserName(playerName);
   }
 
-  async function play(playedCard) {
-    console.log(`The card ${playedCard} was played...`);
+  async function play(newCard) {
     await axios.post(`/api/tables/${ID}/${userID}`, {
       ID: userID,
       name: userName,
-      card: playedCard,
+      card: playedCard === newCard ? "" : newCard,
     });
     socket.emit("update-players"); // update signal to the server
+    setPlayedCard(newCard);
   }
 
   return (
@@ -85,7 +84,7 @@ function Table() {
         roundDuration={roundDuration}
       />
       <Seats seatedPlayers={seatedPlayers} joinTable={addPlayer} />
-      <Hand play={play} />
+      <Hand play={play} playedCard={playedCard} />
     </div>
   );
 }

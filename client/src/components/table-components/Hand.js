@@ -18,7 +18,14 @@ export default function Hand(props) {
   ];
 
   const cards = values.map((value) => {
-    return <Card key={value} name={value} play={props.play} />;
+    return (
+      <Card
+        key={value}
+        name={value}
+        play={props.play}
+        played={value === props.playedCard ? true : false}
+      />
+    );
   });
 
   return <div className='hand'>{cards}</div>;
@@ -26,7 +33,12 @@ export default function Hand(props) {
 
 function Card(props) {
   return (
-    <button className='card' onClick={() => props.play(props.name)}>
+    <button
+      className={"card" + (props.played ? "-selected" : "")}
+      onClick={() => {
+        props.play(props.name);
+      }}
+    >
       {props.name}
     </button>
   );
