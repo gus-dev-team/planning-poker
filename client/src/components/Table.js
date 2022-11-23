@@ -8,15 +8,21 @@ import Hand from "./table-components/Hand";
 import Seats from "./table-components/Seats";
 
 const socket = io("localhost:5000");
-const userID = nanoid();
-// userID is the current session's user ID
+// Se eu começar a ter problemas com o socket.id mudando,
+// comece a averiguar o problema nessa constante.
+// Uma ideia seria passar o socket como props.
+
+const playerID = nanoid();
+// playerID is the current session's user ID
 // is defined globally so it persists through renderization
 
-function Table() {
-  const { ID } = useParams(); // ID is the table ID
+function Table(props) {
+  const { tableID } = useParams(); // ID is the table ID
 
-  const [userName, setUserName] = useState("");
-  const [playedCard, setPlayedCard] = useState("");
+  //TENTANDO FAZER SEM USAR userName e playedCard
+
+  // const [userName, setUserName] = useState("");
+  // const [playedCard, setPlayedCard] = useState("");
   // 'userName' is the name set by the current user on the browser
   // and it is defined when the user first joins the current table
   // same for playedCard...
@@ -27,11 +33,11 @@ function Table() {
   const [seatedPlayers, setSeatedPlayers] = useState([]);
 
   useEffect(() => {
-    setTable(ID);
+    setTable(tableID);
 
     socket.on("connect", () => {
       // setIsConnected(true);
-      setTable(ID);
+      setTable(tableID);
     });
 
     socket.on("disconnect", () => {
@@ -39,7 +45,7 @@ function Table() {
     });
 
     socket.on("update", () => {
-      setTable(ID);
+      setTable(tableID);
     });
 
     return () => {
@@ -47,33 +53,33 @@ function Table() {
       socket.off("disconnect");
       socket.off("update");
     };
-  }, [ID, playedCard]);
+  }, [
+    tableID,
+    // playedCard
+  ]);
 
-  async function setTable(ID) {
-    const { data } = await axios.get(`/api/tables/${ID}`);
+  async function setTable(tableID) {
+    const { data } = await axios.get(`/api/tables/${tableID}`);
     setIssue(data.issue);
     setRoundDuration(data.time);
     setSeatedPlayers(data.players);
   }
 
   async function addPlayer(playerName) {
-    await axios.post(`/api/tables/${ID}`, {
-      ID: userID,
+    await axios.post(`/api/tables/${tableID}`, {
+      ID: playerID,
       name: playerName,
       card: "",
     });
     socket.emit("update-players"); // update signal to the server
-    setUserName(playerName);
   }
 
   async function play(newCard) {
-    await axios.post(`/api/tables/${ID}/${userID}`, {
-      ID: userID,
-      name: userName,
-      card: playedCard === newCard ? "" : newCard,
+    await axios.post(`/api/tables/${tableID}/${playerID}`, {
+      card: newCard,
     });
     socket.emit("update-players"); // update signal to the server
-    setPlayedCard(newCard);
+    // setPlayedCard(newCard);
   }
 
   return (
@@ -84,7 +90,13 @@ function Table() {
         roundDuration={roundDuration}
       />
       <Seats seatedPlayers={seatedPlayers} joinTable={addPlayer} />
-      <Hand play={play} playedCard={playedCard} seatedPlayers={seatedPlayers} />
+      <Hand
+        play={play}
+        // playerInfo={seatedPlayers.find((player) => player.ID === playerID)}
+        // playedCard={playedCard}
+        seatedPlayers={seatedPlayers}
+        playerID={playerID}
+      />
     </div>
   );
 }

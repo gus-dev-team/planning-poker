@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Entrance ID={instanceID} getNewTable={getNewTable}/>}/>
-          <Route path={`/tables/:ID`} element={<Table />}/>
+          <Route path={`/tables/:tableID`} element={<Table />}/>
           <Route path="*" element={<Empty />}/>
         </Route>
       </Routes>

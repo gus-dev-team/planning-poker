@@ -17,13 +17,18 @@ export default function Hand(props) {
     "?",
   ];
 
+  const seatedPlayers = props.seatedPlayers.find(
+    (player) => player.ID === props.playerID
+  );
+  const playerCard = seatedPlayers && seatedPlayers.card;
+
   const cards = values.map((value) => {
     return (
       <Card
         key={value}
         name={value}
-        play={props.play}
-        played={value === props.playedCard ? true : false}
+        playThis={props.play}
+        played={value === playerCard ? true : false}
       />
     );
   });
@@ -34,9 +39,10 @@ export default function Hand(props) {
 function Card(props) {
   return (
     <button
-      className={"card" + (props.played ? "-selected" : "")}
+      className='card'
+      // className={"card" + (props.played ? "-selected" : "")}
       onClick={() => {
-        props.play(props.name);
+        props.playThis(props.name);
       }}
     >
       {props.name}

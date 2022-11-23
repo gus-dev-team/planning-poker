@@ -105,9 +105,9 @@ function SeatedPlayers(props) {
               key={player.ID}
             >
               {player.card ? (
-                <span class='material-icons'>check_circle</span>
+                <span className='material-icons'>check_circle</span>
               ) : (
-                <span class='material-icons'>radio_button_unchecked</span>
+                <span className='material-icons'>radio_button_unchecked</span>
               )}
               {player.name}
             </li>
