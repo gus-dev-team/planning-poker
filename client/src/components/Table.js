@@ -74,6 +74,12 @@ function Table(props) {
     socket.emit("update-players"); // update signal to the server
   }
 
+  async function removePlayer() {
+    // should use playerID only...
+    // I'll use axios.delete for the first time!
+    console.log("I want to leave the table.");
+  }
+
   async function play(newCard) {
     await axios.post(`/api/tables/${tableID}/${playerID}`, {
       card: newCard,
@@ -89,7 +95,11 @@ function Table(props) {
         setIssue={(string) => setIssue(string)}
         roundDuration={roundDuration}
       />
-      <Seats seatedPlayers={seatedPlayers} joinTable={addPlayer} />
+      <Seats
+        seatedPlayers={seatedPlayers}
+        joinTable={addPlayer}
+        leaveTable={removePlayer}
+      />
       <Hand
         play={play}
         // playerInfo={seatedPlayers.find((player) => player.ID === playerID)}

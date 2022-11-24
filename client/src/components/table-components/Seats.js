@@ -7,10 +7,6 @@ export default function Seats(props) {
 
   // useEffect(() => {}, [props.seatedPlayers]);
 
-  function leaveTable() {
-    //
-  }
-
   return (
     <div className='seats'>
       <SeatedPlayers
@@ -19,7 +15,7 @@ export default function Seats(props) {
       />
 
       {seatStatus ? (
-        <button onClick={leaveTable}>
+        <button onClick={props.leaveTable}>
           <span className='material-icons'>logout</span>
           <span>leave</span>
         </button>
@@ -58,10 +54,15 @@ function JoinTable(props) {
     props.toggleSeatStatus();
   }
 
+  function handleReset(e) {
+    setPlayerName("");
+    setFormStatus(false);
+  }
+
   return (
     <div>
       {formStatus ? (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onReset={handleReset}>
           <label htmlFor='name-input'>player name</label>
           <input
             type='text'
@@ -72,7 +73,9 @@ function JoinTable(props) {
             value={playerName}
             onChange={handleChange}
           />
-          <button type='submit'>sit</button>
+          <br></br>
+          <button type='submit'>join</button>
+          <button type='reset'>cancel</button>
         </form>
       ) : (
         <button onClick={() => setFormStatus(!formStatus)}>

@@ -33,11 +33,7 @@ export default function Hand(props) {
     );
   });
 
-  return (
-    // <div className='container'>
-    <div className='hand'>{cards}</div>
-    // </div>
-  );
+  return <div className='hand'>{cards}</div>;
 }
 
 function Card(props) {
