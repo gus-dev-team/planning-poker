@@ -12,10 +12,10 @@ export default function Dealer(props) {
         // isDisabled={!props.seatStatus}
       />
 
-      <Timer
+      {/* <Timer
         duration={props.roundDuration}
         // status={props.seatStatus}
-      />
+      /> */}
     </div>
   );
 }

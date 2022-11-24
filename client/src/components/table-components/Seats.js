@@ -21,7 +21,7 @@ export default function Seats(props) {
       {seatStatus ? (
         <button onClick={leaveTable}>
           <span className='material-icons'>logout</span>
-          {/* <span>leave</span> */}
+          <span>leave</span>
         </button>
       ) : (
         <JoinTable
@@ -77,7 +77,7 @@ function JoinTable(props) {
       ) : (
         <button onClick={() => setFormStatus(!formStatus)}>
           <span className='material-icons'>login</span>
-          {/* <span>join table</span> */}
+          <span>join table</span>
         </button>
       )}
     </div>
