@@ -4,6 +4,7 @@ import logger from "./utils/logger.js";
 import Table from "./models/tableModel.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import tablesRouter from "./routes/tablesRouter.js";
 
 const app = express();
 const server = createServer(app);
@@ -18,85 +19,15 @@ connectToDatabase();
 app.use(express.urlencoded({ extended: false })); // Why use this?
 app.use(express.json()); // JSON parser.
 app.use(logger);
+app.use("/api/tables/", tablesRouter);
 
 // §TEST //////////////////////////////////////////////
-import testingRouter from "./testing/testingRouter.js";
-app.use("/api/tests/", testingRouter); ////////////////
+// import testingRouter from "./testing/testingRouter.js";
+// app.use("/api/tests/", testingRouter); ////////////////
 ///////////////////////////////////////////////////////
 
 app.get("/", (req, res) => {
   res.status(200).json({ success: true, data: [] });
-});
-
-// get tables list
-app.get("/api/tables/", async (req, res) => {
-  try {
-    const data = await Table.find({});
-    res.status(200).json(data);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-// creates new table...
-app.post("/api/tables/new", async (req, res) => {
-  const { ID } = req.body;
-  const newTable = new Table({ ID: ID });
-  await newTable.save(function (err, result) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(result);
-    }
-  });
-
-  io.emit("update", `update signal`);
-  res.status(200).json({ success: true, data: [] });
-});
-
-app.get("/api/tables/:ID", async (req, res) => {
-  try {
-    const { ID } = req.params;
-    const data = await Table.find({});
-    const specificTable = data.find((table) => table.ID === ID);
-    res.status(200).json(specificTable);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-// updates the player list...
-app.post("/api/tables/:ID", async (req, res) => {
-  const { ID, name, card } = req.body;
-
-  await Table.updateOne(
-    { ID: req.params.ID },
-    { $push: { players: { ID, name, card } } }
-  );
-
-  res.status(201).send({ success: true, data: [] });
-});
-
-// play card
-app.post("/api/tables/:ID/:playerID", async (req, res) => {
-  // console.log(req.params, req.body);
-
-  // Quero puxar a carta do player com playerID na table com ID
-  // const currentPlayer = await Table.findOne({
-  //   ID: req.params.ID,
-  //   players: { ID: req.params.playerID },
-  // });
-  // console.log(currentPlayer);
-
-  await Table.updateOne(
-    { ID: req.params.ID, "players.ID": req.params.playerID },
-    {
-      $set: {
-        "players.$.card": req.body.card,
-      },
-    }
-  );
-  res.status(201).send({ success: true, data: [] });
 });
 
 io.on("connection", (socket) => {
