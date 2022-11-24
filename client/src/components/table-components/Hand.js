@@ -34,17 +34,16 @@ export default function Hand(props) {
   });
 
   return (
-    <div className='container'>
-      <div className='hand'>{cards}</div>
-    </div>
+    // <div className='container'>
+    <div className='hand'>{cards}</div>
+    // </div>
   );
 }
 
 function Card(props) {
   return (
     <button
-      className='card'
-      // className={"card" + (props.played ? "-selected" : "")}
+      className={"card" + (props.played ? "-selected" : "")}
       onClick={() => {
         props.playThis(props.name);
       }}

@@ -14,7 +14,7 @@ export default function Seats(props) {
   return (
     <div className='seats'>
       <SeatedPlayers
-        list={props.seatedPlayers || []}
+        list={props.seatedPlayers || []} // ARRUMAR ISSO AQUI.
         seatedPlayers={props.seatedPlayers}
       />
 

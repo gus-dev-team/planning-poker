@@ -83,7 +83,7 @@ function Table(props) {
   }
 
   return (
-    <div>
+    <div className='table'>
       <Dealer
         issue={issue}
         setIssue={(string) => setIssue(string)}

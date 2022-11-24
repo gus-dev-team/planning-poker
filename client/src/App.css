@@ -1,38 +1,32 @@
 :root {
-  /* --french-wine: hsl(344, 75%, 40%);
-  --french-wine-lighter: hsl(344, 75%, 45%);
-  --pearl-black: hsl(42, 60%, 92%);
-  --pearl-black: hsl(0, 0%, 19%);
-  --royal-green: hsl(139, 77%, 21%);
-  --royal-green-darker: hsl(139, 77%, 16%);
-
-  --aged-paper: hsl(45, 51%, 82%);
-  --ivory-paper: hsl(42, 60%, 92%);
-  --shiny-silver: hsl(180, 5%, 92%); */
-
   --darkgreen: #244e04;
   --lightgreen: #8aa26e;
   --beige: #f6f8e0;
   --crimson: #b91343;
   --darkgrey: #3c4b52;
 
-  --darkpurple: #58094f;
-  --purple: #841e62;
-  --yellow: #f3aa20;
-  --darkblue: #2a445e;
-  --darkteal: #346b6d;
+  --tyrian-purple: #58094f;
+  --dark-purple: #841e62;
+  --lightning-yellow: #f3aa20;
+  --catalina-blue: #2a445e;
+  --blumine: #346b6d;
 }
 
 /* § Configs */
 html {
   box-sizing: border-box;
   font-size: 10px;
+  height: 100vh;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: inherit;
+}
+
+h1 {
+  margin: 0;
 }
 
 a,
@@ -48,8 +42,6 @@ input {
   background-color: inherit;
 }
 
-/* § Layout */
-
 /* § General Styling */
 body {
   margin: 0;
@@ -58,7 +50,14 @@ body {
 }
 
 header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   margin: 0 auto;
+
+  height: 15vh;
 
   color: var(--lightgreen);
 
@@ -120,15 +119,31 @@ button:hover {
   background-color: var(--lightgreen);
 }
 
+/* § Layout */
+/* #root {
+  display: grid;
+  grid-template-rows: 1fr 7fr;
+} */
+
 /* § Component: Table */
+.table {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 85vh;
+}
 
 /* § Component: Dealer */
+
 .issue {
   display: flex;
   justify-content: center;
   align-items: center;
 
   min-height: 5rem;
+  width: 100vw;
 
   margin: 0 auto;
 
@@ -165,7 +180,7 @@ button:hover {
   justify-content: center;
   align-items: center;
 
-  min-height: 30vh;
+  min-height: 50vh; /* mudar isso */
   width: 95vw;
 
   margin: 1em auto;
@@ -203,7 +218,7 @@ button:hover {
   color: var(--beige);
   background-color: var(--darkgreen);
 
-  font-size: 1rem;
+  font-size: 2rem;
   text-transform: capitalize;
 
   text-align: center;
@@ -214,7 +229,7 @@ button:hover {
 
   color: var(--darkgrey);
 
-  font-size: 0.8rem;
+  font-size: 1.5rem;
 }
 
 .seats li:nth-child(odd) {
@@ -236,7 +251,7 @@ button:hover {
 }
 
 /* Component: Hand */
-.container {
+/* .container {
   position: fixed;
   bottom: 0;
   width: 100vw;
@@ -244,18 +259,16 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .hand {
   display: grid;
   grid-template-columns: repeat(12, 60px);
   gap: 5px;
 
-  padding: 1rem 1rem;
+  width: 100vw;
 
-  overflow-x: scroll;
-
-  height: 20vh;
+  overflow-x: auto;
 
   background-color: var(--darkgrey);
 }
@@ -277,7 +290,7 @@ button:hover {
 }
 
 .card-selected {
-  background-color: blueviolet;
+  background-color: rgb(209, 183, 234);
 }
 
 .card:hover {
@@ -294,13 +307,6 @@ button:hover {
 .card-selected {
   color: var(--honeydew);
   border: 2px var(--honeydew) solid;
-
-  background: rgb(241, 250, 238);
-  background: linear-gradient(
-    135deg,
-    rgba(69, 123, 157, 0.75) 0%,
-    rgba(29, 53, 87, 1) 100%
-  );
 
   box-shadow: 1px 1px 2px var(--prussian-blue);
   font-family: "PT Serif", serif;

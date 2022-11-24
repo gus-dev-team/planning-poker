@@ -79,7 +79,14 @@ app.post("/api/tables/:ID", async (req, res) => {
 
 // play card
 app.post("/api/tables/:ID/:playerID", async (req, res) => {
-  console.log(req.params, req.body);
+  // console.log(req.params, req.body);
+
+  // Quero puxar a carta do player com playerID na table com ID
+  // const currentPlayer = await Table.findOne({
+  //   ID: req.params.ID,
+  //   players: { ID: req.params.playerID },
+  // });
+  // console.log(currentPlayer);
 
   await Table.updateOne(
     { ID: req.params.ID, "players.ID": req.params.playerID },
