@@ -3,7 +3,7 @@ import connectToDatabase from "./database/database.js";
 import logger from "./utils/logger.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import tablesRouter from "./routes/tablesRouter.js";
+import roomsRouter from "./routes/roomsRouter.js";
 
 const app = express();
 const server = createServer(app);
@@ -18,7 +18,7 @@ connectToDatabase();
 app.use(express.urlencoded({ extended: false })); // Why use this?
 app.use(express.json()); // JSON parser.
 app.use(logger);
-app.use("/api/tables/", tablesRouter);
+app.use("/api/rooms/", roomsRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json({ success: true, data: [] });

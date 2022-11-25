@@ -2,7 +2,7 @@ import "./App.css";
 import Layout from "./Layout";
 import Empty from "./components/Empty";
 import Entrance from "./components/Entrance";
-import Table from "./components/Table";
+import Room from "./components/Room";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { nanoid } from "nanoid";
 import axios from "axios";
@@ -10,8 +10,8 @@ import axios from "axios";
 function App() {
   const instanceID = nanoid();
 
-  async function getNewTable() {
-    await axios.post("/api/tables/new", {
+  async function getNewRoom() {
+    await axios.post("/api/rooms/new", {
       ID: instanceID,
     });
   }
@@ -20,8 +20,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Entrance ID={instanceID} getNewTable={getNewTable}/>}/>
-          <Route path={`/tables/:tableID`} element={<Table />}/>
+          <Route index element={<Entrance ID={instanceID} getNewRoom={getNewRoom}/>}/>
+          <Route path={`/rooms/:roomID`} element={<Room />}/>
           <Route path="*" element={<Empty />}/>
         </Route>
       </Routes>
@@ -31,5 +31,5 @@ function App() {
 
 export default App;
 
-/* <Route path="/table/new" element={<Table />}/> */
+/* <Route path="/room/new" element={<Room />}/> */
 /* <Route path="/test" element={<Test />} /> */

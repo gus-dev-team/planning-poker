@@ -16,7 +16,7 @@ const playerSchema = mongoose.Schema({
   },
 });
 
-const tableSchema = mongoose.Schema(
+const roomschema = mongoose.Schema(
   {
     ID: {
       type: String,
@@ -40,13 +40,13 @@ const tableSchema = mongoose.Schema(
   }
 );
 
-const Table = mongoose.model("Table", tableSchema);
+const Room = mongoose.model("Room", roomschema);
 
-export default Table;
+export default Room;
 
 // // RUN THIS ONCE TO CREATE AN ENTRY ON THE DATABASE
 // // >> COPY AND PASTE ON SERVER.JS AND RUN NODE.
-// await Table.create([
+// await Room.create([
 //   {
 //     ID: "023",
 //     issue: "How hard can this be?!",

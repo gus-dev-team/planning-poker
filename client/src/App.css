@@ -94,7 +94,7 @@ button:hover {
 }
 
 /* § Component: Entrance */
-.new-table-button {
+.new-room-button {
   height: 3rem;
   width: 10rem;
 
@@ -115,7 +115,7 @@ button:hover {
   cursor: pointer;
 }
 
-.new-table-button:hover {
+.new-room-button:hover {
   background-color: var(--lightgreen);
 }
 
@@ -125,8 +125,8 @@ button:hover {
   grid-template-rows: 1fr 7fr;
 } */
 
-/* § Component: Table */
-.table {
+/* § Component: Room */
+.room {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

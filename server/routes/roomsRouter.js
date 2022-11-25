@@ -1,24 +1,24 @@
 import express from "express";
-import Table from "../models/tableModel.js";
+import Room from "../models/roomModel.js";
 import io from "../server.js";
-const tablesRouter = express.Router();
+const roomsRouter = express.Router();
 
-// Retrieve the tables' collection data.
-tablesRouter.get("/", async (req, res) => {
+// Retrieve the rooms' collection data.
+roomsRouter.get("/", async (req, res) => {
   // This is here for testing purposes.
   try {
-    const data = await Table.find({});
+    const data = await Room.find({});
     res.status(200).json(data);
   } catch (err) {
     console.error(err);
   }
 });
 
-// Creates a new table in the database.
-tablesRouter.post("/new", async (req, res) => {
+// Creates a new room in the database.
+roomsRouter.post("/new", async (req, res) => {
   const { ID } = req.body;
-  const newTable = new Table({ ID: ID });
-  await newTable.save(function (err, result) {
+  const newRoom = new Room({ ID: ID });
+  await newRoom.save(function (err, result) {
     if (err) {
       console.log(err);
     } else {
@@ -30,28 +30,28 @@ tablesRouter.post("/new", async (req, res) => {
   res.status(200).json({ success: true, data: [] });
 });
 
-// Retrieve a table's data.
-tablesRouter.get("/:ID", async (req, res) => {
+// Retrieve a room's data.
+roomsRouter.get("/:ID", async (req, res) => {
   try {
     const { ID } = req.params;
-    const data = await Table.find({});
-    const specificTable = data.find((table) => table.ID === ID);
-    res.status(200).json(specificTable);
+    const data = await Room.find({});
+    const specificRoom = data.find((room) => room.ID === ID);
+    res.status(200).json(specificRoom);
   } catch (err) {
     console.error(err);
   }
 });
 
-// Update the issue of a table.
-tablesRouter.put("/:tableID", async (req, res) => {
+// Update the issue of a room.
+roomsRouter.put("/:roomID", async (req, res) => {
   console.log("Sucessfully updated the issue...");
 });
 
-// Add a new player to a table.
-tablesRouter.post("/:ID", async (req, res) => {
+// Add a new player to a room.
+roomsRouter.post("/:ID", async (req, res) => {
   const { ID, name, card } = req.body;
 
-  await Table.updateOne(
+  await Room.updateOne(
     { ID: req.params.ID },
     { $push: { players: { ID, name, card } } }
   );
@@ -66,16 +66,16 @@ tablesRouter.post("/:ID", async (req, res) => {
 // BUT! If the current value equals the new value, then it should update to the empty string instead.
 // This will act as if the player would be canceling their vote.
 // My difficulty at the momment is HOW to retrieve the current card value from the database.
-tablesRouter.post("/:ID/:playerID", async (req, res) => {
+roomsRouter.post("/:ID/:playerID", async (req, res) => {
   // console.log(req.params, req.body);
 
-  // const currentPlayer = await Table.findOne({
+  // const currentPlayer = await Room.findOne({
   //   ID: req.params.ID,
   //   players: { ID: req.params.playerID },
   // });
   // console.log(currentPlayer);
 
-  await Table.updateOne(
+  await Room.updateOne(
     { ID: req.params.ID, "players.ID": req.params.playerID },
     {
       $set: {
@@ -86,4 +86,4 @@ tablesRouter.post("/:ID/:playerID", async (req, res) => {
   res.status(201).send({ success: true, data: [] });
 });
 
-export default tablesRouter;
+export default roomsRouter;

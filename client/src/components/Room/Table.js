@@ -7,12 +7,14 @@ import {
 // import axios from "axios";
 // import socket from "../../utils/socket.js";
 
+// Loo and loo
+
 export default function Seats(props) {
   return (
     <div className='seats'>
       <List seatedPlayers={props.seatedPlayers} />
 
-      <Bouncer tableID={props.tableID} playerID={props.playerID} />
+      <Bouncer roomID={props.roomID} playerID={props.playerID} />
     </div>
   );
 }
@@ -23,7 +25,7 @@ function Bouncer(props) {
   const [name, setName] = useState("");
 
   // Puts the focus on the input field
-  // after clicking "join table".
+  // after clicking "join room".
   useEffect(() => {
     if (isFormVisible && document.getElementById("name-input")) {
       (function () {
@@ -38,7 +40,7 @@ function Bouncer(props) {
 
   async function handleSubmit(e) {
     e.preventDefault(); // Prevents page redirection.
-    addPlayer(name, props.tableID, props.playerID);
+    addPlayer(name, props.roomID, props.playerID);
     setName("");
     setIsFormVisible(!isFormVisible);
     setIsSeated(!isSeated);
@@ -77,12 +79,12 @@ function Bouncer(props) {
           {isSeated ? (
             <button onClick={handleClick}>
               <span className='material-icons'>logout</span>
-              <span>leave table</span>
+              <span>leave room</span>
             </button>
           ) : (
             <button onClick={() => setIsFormVisible(!isFormVisible)}>
               <span className='material-icons'>login</span>
-              <span>join table</span>
+              <span>join room</span>
             </button>
           )}
         </div>
@@ -95,7 +97,7 @@ function List(props) {
   return (
     <ul>
       {props.seatedPlayers.length < 1 ? (
-        <div>empty table</div>
+        <div>empty room</div>
       ) : (
         <div>players seated</div>
       )}
