@@ -1,7 +1,6 @@
 import express from "express";
 import connectToDatabase from "./database/database.js";
 import logger from "./utils/logger.js";
-import Table from "./models/tableModel.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import tablesRouter from "./routes/tablesRouter.js";
@@ -21,11 +20,6 @@ app.use(express.json()); // JSON parser.
 app.use(logger);
 app.use("/api/tables/", tablesRouter);
 
-// §TEST //////////////////////////////////////////////
-// import testingRouter from "./testing/testingRouter.js";
-// app.use("/api/tests/", testingRouter); ////////////////
-///////////////////////////////////////////////////////
-
 app.get("/", (req, res) => {
   res.status(200).json({ success: true, data: [] });
 });
@@ -41,14 +35,10 @@ io.on("connection", (socket) => {
     console.log(`update signal: ${socket.id}...`);
     io.emit("update", `update signal`);
   });
-
-  // §TEST
-  socket.on("post!", () => {
-    console.log(`hello from ${socket.id}`);
-    io.emit("message", "message received..."); // I've switch 'socket.emit' to 'io.emit' and everything worked.
-  });
 });
 
 server.listen(5000, () => {
   console.log("Server is listening on port 5000...");
 });
+
+export default io;

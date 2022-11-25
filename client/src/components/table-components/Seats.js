@@ -1,67 +1,62 @@
 import "../../App.css";
 import React, { useEffect, useState } from "react";
+import {
+  addPlayer,
+  removePlayer,
+} from "../../controllers/playersController.js";
+// import axios from "axios";
+// import socket from "../../utils/socket.js";
 
 export default function Seats(props) {
-  const [seatStatus, setSeatStatus] = useState(false);
-  // 'true' means 'occupied' by the current user
-
-  // useEffect(() => {}, [props.seatedPlayers]);
-
   return (
     <div className='seats'>
-      <SeatedPlayers
-        list={props.seatedPlayers || []} // ARRUMAR ISSO AQUI.
-        seatedPlayers={props.seatedPlayers}
-      />
+      <List seatedPlayers={props.seatedPlayers} />
 
-      {seatStatus ? (
-        <button onClick={props.leaveTable}>
-          <span className='material-icons'>logout</span>
-          <span>leave</span>
-        </button>
-      ) : (
-        <JoinTable
-          onConfirmation={props.joinTable}
-          toggleSeatStatus={() => setSeatStatus(!seatStatus)}
-        />
-      )}
+      <Bouncer tableID={props.tableID} playerID={props.playerID} />
     </div>
   );
 }
 
-function JoinTable(props) {
-  // If formStatus is 'false', then the form is hidden.
-  const [formStatus, setFormStatus] = useState(false);
-  const [playerName, setPlayerName] = useState("");
+function Bouncer(props) {
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isSeated, setIsSeated] = useState(false);
+  const [name, setName] = useState("");
 
+  // Puts the focus on the input field
+  // after clicking "join table".
   useEffect(() => {
-    if (formStatus && document.getElementById("name-input")) {
+    if (isFormVisible && document.getElementById("name-input")) {
       (function () {
         document.getElementById("name-input").focus();
       })();
     }
-  }, [formStatus]);
+  }, [isFormVisible]);
 
   function handleChange(e) {
-    setPlayerName(e.target.value);
+    setName(e.target.value);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault(); // Prevents page redirection.
-    props.onConfirmation(playerName);
-    setPlayerName("");
-    setFormStatus(false);
-    props.toggleSeatStatus();
+    addPlayer(name, props.tableID, props.playerID);
+    setName("");
+    setIsFormVisible(!isFormVisible);
+    setIsSeated(!isSeated);
   }
 
-  function handleReset(e) {
-    setPlayerName("");
-    setFormStatus(false);
+  function handleReset() {
+    setName("");
+    setIsFormVisible(!isFormVisible);
+  }
+
+  function handleClick() {
+    removePlayer(props.playerID);
+    setIsSeated(!isSeated);
   }
 
   return (
     <div>
-      {formStatus ? (
+      {isFormVisible ? (
         <form onSubmit={handleSubmit} onReset={handleReset}>
           <label htmlFor='name-input'>player name</label>
           <input
@@ -70,7 +65,7 @@ function JoinTable(props) {
             name='name'
             autoComplete='off'
             placeholder='enter your username'
-            value={playerName}
+            value={name}
             onChange={handleChange}
           />
           <br></br>
@@ -78,33 +73,38 @@ function JoinTable(props) {
           <button type='reset'>cancel</button>
         </form>
       ) : (
-        <button onClick={() => setFormStatus(!formStatus)}>
-          <span className='material-icons'>login</span>
-          <span>join table</span>
-        </button>
+        <div>
+          {isSeated ? (
+            <button onClick={handleClick}>
+              <span className='material-icons'>logout</span>
+              <span>leave table</span>
+            </button>
+          ) : (
+            <button onClick={() => setIsFormVisible(!isFormVisible)}>
+              <span className='material-icons'>login</span>
+              <span>join table</span>
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
 }
 
-function SeatedPlayers(props) {
+function List(props) {
   return (
     <ul>
-      {!props.seatedPlayers || props.seatedPlayers.length < 1 ? (
-        <div>This table is empty...</div>
+      {props.seatedPlayers.length < 1 ? (
+        <div>empty table</div>
       ) : (
         <div>players seated</div>
       )}
 
-      {/* This is called conditional rendering... */}
-      {/* It works because in JavaScript,
-      true && expression always evaluates to expression,
-      and false && expression always evaluates to false. */}
-      {(props.seatedPlayers || props.seatedPlayers.length >= 1) &&
-        props.list.map((player) => {
+      {props.seatedPlayers.length >= 1 && // See 'conditional rendering' in javascript.
+        props.seatedPlayers.map((player) => {
           return (
             <li
-              // className={"player" + (player.card ? "-ready" : "")} // not currently in use
+              className={"player" + (player.card ? "-ready" : "")}
               key={player.ID}
             >
               {player.card ? (

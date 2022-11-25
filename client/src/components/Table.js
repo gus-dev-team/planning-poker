@@ -2,15 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import axios from "axios";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import Dealer from "./table-components/Dealer";
 import Hand from "./table-components/Hand";
 import Seats from "./table-components/Seats";
-
-const socket = io("localhost:5000");
-// Se eu começar a ter problemas com o socket.id mudando,
-// comece a averiguar o problema nessa constante.
-// Uma ideia seria passar o socket como props.
+import socket from "../utils/socket.js";
 
 const playerID = nanoid();
 // playerID is the current session's user ID
@@ -65,20 +61,14 @@ function Table(props) {
     setSeatedPlayers(data.players);
   }
 
-  async function addPlayer(playerName) {
-    await axios.post(`/api/tables/${tableID}`, {
-      ID: playerID,
-      name: playerName,
-      card: "",
-    });
-    socket.emit("update-players"); // update signal to the server
-  }
-
-  async function removePlayer() {
-    // should use playerID only...
-    // I'll use axios.delete for the first time!
-    console.log("I want to leave the table.");
-  }
+  // async function addPlayer(playerName) {
+  //   await axios.post(`/api/tables/${tableID}`, {
+  //     ID: playerID,
+  //     name: playerName,
+  //     card: "",
+  //   });
+  //   socket.emit("update-players"); // update signal to the server
+  // }
 
   async function play(newCard) {
     await axios.post(`/api/tables/${tableID}/${playerID}`, {
@@ -96,9 +86,9 @@ function Table(props) {
         roundDuration={roundDuration}
       />
       <Seats
+        tableID={tableID}
+        playerID={playerID}
         seatedPlayers={seatedPlayers}
-        joinTable={addPlayer}
-        leaveTable={removePlayer}
       />
       <Hand
         play={play}

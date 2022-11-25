@@ -1,5 +1,6 @@
 import express from "express";
 import Table from "../models/tableModel.js";
+import io from "../server.js";
 const tablesRouter = express.Router();
 
 // Retrieve the tables' collection data.
@@ -39,6 +40,11 @@ tablesRouter.get("/:ID", async (req, res) => {
   } catch (err) {
     console.error(err);
   }
+});
+
+// Update the issue of a table.
+tablesRouter.put("/:tableID", async (req, res) => {
+  console.log("Sucessfully updated the issue...");
 });
 
 // Add a new player to a table.
