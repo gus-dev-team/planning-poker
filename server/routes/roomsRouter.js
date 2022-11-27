@@ -46,6 +46,7 @@ roomsRouter.get("/:ID", async (req, res) => {
 
 // Update the theme of a room.
 roomsRouter.put("/:roomID/theme", async (req, res) => {
+  console.log(req.params, req.body);
   await Room.updateOne(
     { ID: req.params.roomID },
     { $set: { theme: req.body.theme } }

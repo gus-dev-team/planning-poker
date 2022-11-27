@@ -1,14 +1,15 @@
 import "../../App.css";
+import updateTheme from "../../controllers/themeController";
 import React, { useState, useEffect } from "react";
 
 function Theme(props) {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [title, setTitle] = useState(props.title);
+  const [string, setString] = useState("");
 
   useEffect(() => {
-    if (isFormVisible && document.getElementById("title-input")) {
+    if (isFormVisible && document.getElementById("theme-input")) {
       (function () {
-        document.getElementById("title-input").focus();
+        document.getElementById("theme-input").focus();
       })();
     }
     // When the timer is running, the page renders every second.
@@ -16,12 +17,13 @@ function Theme(props) {
   }, [isFormVisible]);
 
   function handleChange(e) {
-    setTitle(e.target.value);
+    setString(e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault(); // Prevents page redirection.
-    setTitle("");
+    updateTheme(props.roomID, string);
+    setString("");
     setIsFormVisible(false);
   }
 
@@ -31,10 +33,11 @@ function Theme(props) {
         <form onSubmit={handleSubmit}>
           <input
             type='text'
+            id='theme-input'
             name='name'
             autoComplete='off'
-            placeholder='Enter the proposed title...'
-            value={title}
+            placeholder='Enter the proposed theme...'
+            value={string}
             onChange={handleChange}
           />
           <button type='submit' style={{ display: "none" }}>
@@ -42,7 +45,10 @@ function Theme(props) {
           </button>
         </form>
       ) : (
-        <div>{title}</div>
+        <div>
+          issue: {props.theme}
+          <span className='material-icons'>edit</span>
+        </div>
       )}
     </div>
   );

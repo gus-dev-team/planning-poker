@@ -93,6 +93,10 @@ button:hover {
   border-radius: 1px;
 }
 
+.material-icons {
+  font-size: 2rem;
+}
+
 /* § Component: Entrance */
 .new-room-button {
   height: 3rem;

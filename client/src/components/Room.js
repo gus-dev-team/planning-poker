@@ -13,7 +13,7 @@ function Room(props) {
   const { roomID } = useParams();
 
   // const [isConnected, setIsConnected] = useState(socket.connected);
-  const [description, setDescription] = useState("");
+  const [theme, setTheme] = useState("");
   // const [roundDuration, setRoundDuration] = useState(0);
   const [seatedPlayers, setSeatedPlayers] = useState([]);
 
@@ -45,7 +45,7 @@ function Room(props) {
 
   async function setRoom(roomID) {
     const { data } = await axios.get(`/api/rooms/${roomID}`);
-    setDescription(data.theme);
+    setTheme(data.theme);
     // setRoundDuration(data.time);
     setSeatedPlayers(data.players);
   }
@@ -53,7 +53,7 @@ function Room(props) {
   return (
     <div className='room'>
       {/* <Dealer issue={issue} roundDuration={roundDuration} /> */}
-      <Theme description={description} />
+      <Theme theme={theme} roomID={roomID} />
       <Table
         roomID={roomID}
         playerID={playerID}
