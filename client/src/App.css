@@ -137,7 +137,8 @@ button:hover {
 
 /* § Component: Dealer */
 
-.theme {
+.theme,
+.theme-disabled {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -157,6 +158,11 @@ button:hover {
   text-transform: uppercase;
 
   cursor: pointer;
+}
+
+.theme-disabled {
+  color: darkgrey;
+  background-color: grey;
 }
 
 .theme form {
@@ -282,7 +288,8 @@ button:hover {
 }
 
 .card,
-.card-selected {
+.card-selected,
+.card-disabled {
   width: 60px;
   height: 85px;
 
@@ -320,5 +327,14 @@ button:hover {
   font-family: "PT Serif", serif;
 }
 
+.card-disabled,
+.card-disabled:hover {
+  color: darkgray;
+  background-color: grey;
+
+  border: 2px solid;
+  border-color: darkgray;
+  border-radius: 1rem;
+}
 @media screen and (width: 600px) {
 }

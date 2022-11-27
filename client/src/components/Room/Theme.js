@@ -34,7 +34,10 @@ function Theme(props) {
   }
 
   return (
-    <div className='theme' onClick={enableForm}>
+    <div
+      className={"theme" + (props.disabled ? "-disabled" : "")}
+      onClick={enableForm}
+    >
       {isFormVisible ? (
         <form onSubmit={handleSubmit}>
           <input

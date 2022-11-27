@@ -42,7 +42,11 @@ export default function Hand(props) {
 function Card(props) {
   return (
     <button
-      className={"card" + (props.played ? "-selected" : "")}
+      className={
+        "card" +
+        (props.played ? "-selected" : "") +
+        (props.disabled ? "-disabled" : "")
+      }
       onClick={() => {
         updateCard(props.roomID, props.playerID, props.name);
       }}
