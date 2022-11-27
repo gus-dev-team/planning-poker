@@ -1,4 +1,5 @@
 import "../../App.css";
+import { updateCard } from "../../controllers/playerController.js";
 
 export default function Hand(props) {
   // List of the value of each card in hand.
@@ -27,8 +28,9 @@ export default function Hand(props) {
       <Card
         key={value}
         name={value}
-        playThis={props.play}
         played={value === playerCard ? true : false}
+        roomID={props.roomID}
+        playerID={props.playerID}
       />
     );
   });
@@ -41,7 +43,7 @@ function Card(props) {
     <button
       className={"card" + (props.played ? "-selected" : "")}
       onClick={() => {
-        props.playThis(props.name);
+        updateCard(props.roomID, props.playerID, props.name);
       }}
     >
       {props.name}

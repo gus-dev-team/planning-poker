@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { nanoid } from "nanoid";
 import axios from "axios";
 // import io from "socket.io-client";
 // import Dealer from "./Room/Dealer";
@@ -8,10 +7,7 @@ import Theme from "./Room/Theme";
 import Hand from "./Room/Hand";
 import Table from "./Room/Table";
 import socket from "../utils/socket.js";
-
-const playerID = nanoid();
-// playerID is the current session's user ID
-// is defined globally so it persists through renderization
+import playerID from "../utils/playerID.js";
 
 function Room(props) {
   const { roomID } = useParams();
@@ -54,13 +50,6 @@ function Room(props) {
     setSeatedPlayers(data.players);
   }
 
-  async function play(newCard) {
-    await axios.post(`/api/rooms/${roomID}/${playerID}`, {
-      card: newCard,
-    });
-    socket.emit("update");
-  }
-
   return (
     <div className='room'>
       {/* <Dealer issue={issue} roundDuration={roundDuration} /> */}
@@ -71,11 +60,12 @@ function Room(props) {
         seatedPlayers={seatedPlayers}
       />
       <Hand
-        play={play}
+        // play={play}
         // playerInfo={seatedPlayers.find((player) => player.ID === playerID)}
         // playedCard={playedCard}
-        seatedPlayers={seatedPlayers}
+        roomID={roomID}
         playerID={playerID}
+        seatedPlayers={seatedPlayers}
       />
     </div>
   );

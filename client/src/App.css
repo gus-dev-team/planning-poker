@@ -246,6 +246,14 @@ button:hover {
   );
 }
 
+/* .player::before {
+  content: "x";
+}
+
+.player-ready::before {
+  content: "ok";
+} */
+
 /* Component: Hand */
 /* .container {
   position: fixed;

@@ -1,7 +1,7 @@
 import express from "express";
 import Room from "../models/roomModel.js";
 import io from "../server.js";
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
 const roomsRouter = express.Router();
 
@@ -50,7 +50,7 @@ roomsRouter.put("/:roomID/theme", async (req, res) => {
     { ID: req.params.roomID },
     { $set: { theme: req.body.theme } }
   );
-  io.emit("update");
+  // io.emit("update");
   res.status(200).send({ success: true, data: [] });
 });
 
@@ -63,7 +63,7 @@ roomsRouter.put("/:roomID", async (req, res) => {
     { $push: { players: { ID, name } } }
   );
 
-  io.emit("update");
+  // io.emit("update");
   res.status(201).send({ success: true, data: [] });
 });
 
@@ -82,7 +82,6 @@ roomsRouter.delete("/:roomID", async (req, res) => {
     }
   ).exec(); // This is necessary.
 
-  io.emit("update");
   res.status(201).send({ success: true, data: [] });
 });
 
@@ -93,8 +92,8 @@ roomsRouter.delete("/:roomID", async (req, res) => {
 // BUT! If the current value equals the new value, then it should update to the empty string instead.
 // This will act as if the player would be canceling their vote.
 // My difficulty at the momment is HOW to retrieve the current card value from the database.
-roomsRouter.post("/:ID/:playerID", async (req, res) => {
-  // console.log(req.params, req.body);
+roomsRouter.put("/:ID/:playerID", async (req, res) => {
+  console.log(req.params, req.body);
 
   // const currentPlayer = await Room.findOne({
   //   ID: req.params.ID,

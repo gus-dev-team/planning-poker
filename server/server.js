@@ -32,8 +32,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("update", () => {
-    console.log(`update signal: ${socket.id}...`);
-    io.emit("render", `update signal`);
+    // console.log(`update signal: ${socket.id}...`);
+    io.emit("update"); // Sends an update signal to every other connected socket.
   });
 });
 

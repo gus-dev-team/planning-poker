@@ -13,11 +13,14 @@ async function removePlayer(roomID, playerID) {
   await axios.delete(`/api/rooms/${roomID}`, {
     data: { ID: playerID }, // For the method axios.delete, use config.data to pass the body in the request.
   });
+  socket.emit("update");
 }
 
-// [[UNDER CONSTRUCTION]]
 async function updateCard(roomID, playerID, card) {
-  //
+  await axios.put(`/api/rooms/${roomID}/${playerID}`, {
+    card: card,
+  });
+  socket.emit("update");
 }
 
-export { addPlayer, removePlayer };
+export { addPlayer, removePlayer, updateCard };

@@ -1,9 +1,6 @@
 import "../../App.css";
 import React, { useEffect, useState } from "react";
-import {
-  addPlayer,
-  removePlayer,
-} from "../../controllers/playersController.js";
+import { addPlayer, removePlayer } from "../../controllers/playerController.js";
 // import axios from "axios";
 // import socket from "../../utils/socket.js";
 
