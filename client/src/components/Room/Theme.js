@@ -16,6 +16,12 @@ function Theme(props) {
     // The second parameter here is to prevent the focus being stuck on the input element.
   }, [isFormVisible]);
 
+  function enableForm() {
+    if (!props.disabled) {
+      setIsFormVisible(true);
+    }
+  }
+
   function handleChange(e) {
     setString(e.target.value);
   }
@@ -28,7 +34,7 @@ function Theme(props) {
   }
 
   return (
-    <div className='theme' onClick={() => setIsFormVisible(true)}>
+    <div className='theme' onClick={enableForm}>
       {isFormVisible ? (
         <form onSubmit={handleSubmit}>
           <input

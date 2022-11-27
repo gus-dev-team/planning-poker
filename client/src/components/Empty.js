@@ -1,3 +1,3 @@
 export default function Empty() {
-  return <div>Empty</div>;
+  return <div>404</div>;
 }

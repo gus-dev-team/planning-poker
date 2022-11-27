@@ -1,24 +1,3 @@
-// import "../../App.css";
-// import React, { useState, useEffect } from "react";
-// import changeTheme from "../../controllers/themeController.js";
-// // import convertSecondstoTime from "../../utils/timeConversor.js";
-
-// export default function Dealer(props) {
-//   return (
-//     <div className='dealer'>
-//       <Theme
-//         string={props.string} // pq preciso disso aqui? e da linha de cima/??
-//         // isDisabled={!props.seatStatus}
-//       />
-
-//       {/* <Timer
-//         duration={props.roundDuration}
-//         // status={props.seatStatus}
-//       /> */}
-//     </div>
-//   );
-// }
-
 // function Timer(props) {
 //   const [timer, setTimer] = useState(props.duration);
 

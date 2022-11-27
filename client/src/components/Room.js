@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-// import io from "socket.io-client";
-// import Dealer from "./Room/Dealer";
 import Theme from "./Room/Theme";
 import Hand from "./Room/Hand";
 import Table from "./Room/Table";
@@ -13,6 +11,7 @@ function Room(props) {
   const { roomID } = useParams();
 
   // const [isConnected, setIsConnected] = useState(socket.connected);
+  const [disabled, setDisabled] = useState(true);
   const [theme, setTheme] = useState("");
   // const [roundDuration, setRoundDuration] = useState(0);
   const [seatedPlayers, setSeatedPlayers] = useState([]);
@@ -53,19 +52,18 @@ function Room(props) {
   return (
     <div className='room'>
       {/* <Dealer issue={issue} roundDuration={roundDuration} /> */}
-      <Theme theme={theme} roomID={roomID} />
+      <Theme theme={theme} roomID={roomID} disabled={disabled} />
       <Table
         roomID={roomID}
         playerID={playerID}
         seatedPlayers={seatedPlayers}
+        lock={() => setDisabled(!disabled)}
       />
       <Hand
-        // play={play}
-        // playerInfo={seatedPlayers.find((player) => player.ID === playerID)}
-        // playedCard={playedCard}
         roomID={roomID}
         playerID={playerID}
         seatedPlayers={seatedPlayers}
+        disabled={disabled}
       />
     </div>
   );

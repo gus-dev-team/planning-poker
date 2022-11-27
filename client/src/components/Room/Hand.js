@@ -31,6 +31,7 @@ export default function Hand(props) {
         played={value === playerCard ? true : false}
         roomID={props.roomID}
         playerID={props.playerID}
+        disabled={props.disabled}
       />
     );
   });
@@ -45,6 +46,7 @@ function Card(props) {
       onClick={() => {
         updateCard(props.roomID, props.playerID, props.name);
       }}
+      disabled={props.disabled}
     >
       {props.name}
     </button>

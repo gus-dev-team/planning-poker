@@ -9,7 +9,11 @@ export default function Seats(props) {
     <div className='seats'>
       <List seatedPlayers={props.seatedPlayers} />
 
-      <Bouncer roomID={props.roomID} playerID={props.playerID} />
+      <Bouncer
+        roomID={props.roomID}
+        playerID={props.playerID}
+        lock={props.lock}
+      />
     </div>
   );
 }
@@ -38,6 +42,7 @@ function Bouncer(props) {
     setName("");
     setIsFormVisible(!isFormVisible);
     setIsSeated(!isSeated);
+    props.lock();
   }
 
   function handleReset() {
@@ -45,9 +50,11 @@ function Bouncer(props) {
     setIsFormVisible(!isFormVisible);
   }
 
+  // Removes the player.
   function handleClick() {
     removePlayer(props.roomID, props.playerID);
     setIsSeated(!isSeated);
+    props.lock();
   }
 
   return (
