@@ -1,6 +1,8 @@
 import express from "express";
 import Room from "../models/roomModel.js";
 import io from "../server.js";
+import mongoose from "mongoose";
+
 const roomsRouter = express.Router();
 
 // Retrieve the rooms' collection data.
@@ -26,7 +28,7 @@ roomsRouter.post("/new", async (req, res) => {
     }
   });
 
-  io.emit("update", `update signal`);
+  io.emit("update", `New room created!`);
   res.status(200).json({ success: true, data: [] });
 });
 
@@ -42,20 +44,45 @@ roomsRouter.get("/:ID", async (req, res) => {
   }
 });
 
-// Update the issue of a room.
-roomsRouter.put("/:roomID", async (req, res) => {
-  console.log("Sucessfully updated the issue...");
+// Update the theme of a room.
+roomsRouter.put("/:roomID/theme", async (req, res) => {
+  await Room.updateOne(
+    { ID: req.params.roomID },
+    { $set: { theme: req.body.theme } }
+  );
+  io.emit("update");
+  res.status(200).send({ success: true, data: [] });
 });
 
 // Add a new player to a room.
-roomsRouter.post("/:ID", async (req, res) => {
-  const { ID, name, card } = req.body;
+roomsRouter.put("/:roomID", async (req, res) => {
+  const { ID, name } = req.body;
 
   await Room.updateOne(
-    { ID: req.params.ID },
-    { $push: { players: { ID, name, card } } }
+    { ID: req.params.roomID },
+    { $push: { players: { ID, name } } }
   );
 
+  io.emit("update");
+  res.status(201).send({ success: true, data: [] });
+});
+
+// Remove a player from a room.
+roomsRouter.delete("/:roomID", async (req, res) => {
+  console.log(req.params, req.body);
+  const { ID } = req.body;
+  await Room.updateOne(
+    { ID: "testing" },
+    {
+      $pull: {
+        players: {
+          ID: ID,
+        },
+      },
+    }
+  ).exec(); // This is necessary.
+
+  io.emit("update");
   res.status(201).send({ success: true, data: [] });
 });
 

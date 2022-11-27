@@ -31,9 +31,9 @@ io.on("connection", (socket) => {
     console.log(`disconnect: ${socket.id}`);
   });
 
-  socket.on("update-players", () => {
+  socket.on("update", () => {
     console.log(`update signal: ${socket.id}...`);
-    io.emit("update", `update signal`);
+    io.emit("render", `update signal`);
   });
 });
 

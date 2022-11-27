@@ -120,10 +120,6 @@ button:hover {
 }
 
 /* § Layout */
-/* #root {
-  display: grid;
-  grid-template-rows: 1fr 7fr;
-} */
 
 /* § Component: Room */
 .room {
@@ -137,7 +133,7 @@ button:hover {
 
 /* § Component: Dealer */
 
-.issue {
+.theme {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -159,13 +155,13 @@ button:hover {
   cursor: pointer;
 }
 
-.issue form {
+.theme form {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.issue input {
+.theme input {
   font-size: 0.8rem;
   text-align: center;
 

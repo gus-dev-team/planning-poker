@@ -22,10 +22,10 @@ const roomschema = mongoose.Schema(
       type: String,
       required: true,
     },
-    issue: {
+    theme: {
       type: String,
       required: true,
-      default: "tap to change the issue",
+      default: "tap to change the table's theme",
     },
     time: {
       type: Number,
