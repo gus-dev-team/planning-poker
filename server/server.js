@@ -24,16 +24,20 @@ app.get("/", (req, res) => {
   res.status(200).json({ success: true, data: [] });
 });
 
+let socketTotal = 0;
+
 io.on("connection", (socket) => {
-  console.log(`connect: ${socket.id}`);
+  socketTotal += 1;
+  console.log("Total number of sockets: ", socketTotal);
 
   socket.on("disconnect", () => {
-    console.log(`disconnect: ${socket.id}`);
+    socketTotal -= 1;
+    console.log("Total number of sockets: ", socketTotal);
   });
 
   socket.on("update", () => {
     // console.log(`update signal: ${socket.id}...`);
-    io.emit("update"); // Sends an update signal to every other connected socket.
+    io.emit("update");
   });
 });
 
