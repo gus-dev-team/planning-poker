@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Room from "../models/roomModel.js";
+import io from "../server.js";
 
 const createNewRoom = async function (req, res) {
   const { ID } = req.body;
@@ -12,7 +13,7 @@ const createNewRoom = async function (req, res) {
     }
   });
 
-  io.emit("update", `New room created!`);
+  io.emit("update");
   res.status(200).json({ success: true, data: [] });
 };
 
