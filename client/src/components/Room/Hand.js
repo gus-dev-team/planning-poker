@@ -1,4 +1,3 @@
-import "../../App.css";
 import { updateCard } from "../../controllers/playerController.js";
 
 export default function Hand(props) {

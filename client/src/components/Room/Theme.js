@@ -1,4 +1,3 @@
-import "../../App.css";
 import updateTheme from "../../controllers/themeController";
 import React, { useState, useEffect } from "react";
 
@@ -33,33 +32,49 @@ function Theme(props) {
     setIsFormVisible(false);
   }
 
+  function share() {
+    navigator.clipboard.writeText(
+      `http://localhost:3000/rooms/${props.roomID}`
+    );
+    const shareButton = document.getElementById("share");
+    shareButton.textContent =
+      "share the room with your co-workers [link copied!]";
+    setTimeout(() => {
+      shareButton.textContent = "share the room with your co-workers";
+    }, 5000);
+  }
+
   return (
-    <div
-      className={"theme" + (props.disabled ? "-disabled" : "")}
-      onClick={enableForm}
-    >
-      {isFormVisible ? (
-        <form onSubmit={handleSubmit}>
-          <input
-            type='text'
-            id='theme-input'
-            name='name'
-            autoComplete='off'
-            placeholder='Enter the proposed theme...'
-            value={string}
-            onChange={handleChange}
-          />
-          <button type='submit' style={{ display: "none" }}>
-            ok
-          </button>
-        </form>
-      ) : (
-        <div>
-          issue: {props.theme}
-          <span className='material-icons'>edit</span>
-        </div>
-      )}
-    </div>
+    <>
+      <div
+        className={"theme" + (props.disabled ? "-disabled" : "")}
+        onClick={enableForm}
+      >
+        {isFormVisible ? (
+          <form onSubmit={handleSubmit}>
+            <input
+              type='text'
+              id='theme-input'
+              name='name'
+              autoComplete='off'
+              placeholder='Enter the proposed theme...'
+              value={string}
+              onChange={handleChange}
+            />
+            <button type='submit' style={{ display: "none" }}>
+              ok
+            </button>
+          </form>
+        ) : (
+          <div>{props.theme}</div>
+        )}
+      </div>
+      <div className='room-share' onClick={share}>
+        {/* <span id='share'>share the room</span> */}
+        <span className='material-icons'>edit</span>
+        <span className='material-icons'>share</span>
+      </div>
+    </>
   );
 }
 

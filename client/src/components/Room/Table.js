@@ -1,12 +1,11 @@
-import "../../App.css";
 import React, { useEffect, useState } from "react";
 import { addPlayer, removePlayer } from "../../controllers/playerController.js";
 // import axios from "axios";
 // import socket from "../../utils/socket.js";
 
-export default function Seats(props) {
+export default function Table(props) {
   return (
-    <div className='seats'>
+    <div id='table'>
       <List seatedPlayers={props.seatedPlayers} />
 
       <Bouncer
@@ -61,7 +60,6 @@ function Bouncer(props) {
     <div>
       {isFormVisible ? (
         <form onSubmit={handleSubmit} onReset={handleReset}>
-          <label htmlFor='name-input'>player name</label>
           <input
             type='text'
             id='name-input'
@@ -72,19 +70,27 @@ function Bouncer(props) {
             onChange={handleChange}
           />
           <br></br>
-          <button type='submit'>join</button>
-          <button type='reset'>cancel</button>
+          <button className='table-buttons' type='submit'>
+            join
+          </button>
+          <button className='table-buttons' type='reset'>
+            cancel
+          </button>
         </form>
       ) : (
         <div>
           {isSeated ? (
-            <button onClick={handleClick}>
+            <button className='table-buttons' onClick={handleClick}>
               <span className='material-icons'>logout</span>
               <span>leave table</span>
             </button>
           ) : (
-            <button onClick={() => setIsFormVisible(!isFormVisible)}>
-              <span className='material-icons'>login</span>
+            <button
+              id='join-table-button'
+              className='table-buttons'
+              onClick={() => setIsFormVisible(!isFormVisible)}
+            >
+              {/* <span className='material-icons'>login</span> */}
               <span>join table</span>
             </button>
           )}

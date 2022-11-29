@@ -50,23 +50,10 @@ function Room(props) {
     // setRoundDuration(data.time);
   }
 
-  function share() {
-    navigator.clipboard.writeText(`http://localhost:3000/rooms/${roomID}`);
-    const shareButton = document.getElementById("share");
-    shareButton.textContent =
-      "share the room with your co-workers [link copied!]";
-    setTimeout(() => {
-      shareButton.textContent = "share the room with your co-workers";
-    }, 5000);
-  }
-
   return (
     <div className='room'>
       <Theme theme={theme} roomID={roomID} disabled={disabled} />
-      <div className='room-share' onClick={share}>
-        <span id='share'>share the room with your co-workers</span>
-        <span className='material-icons'>share</span>
-      </div>
+
       <Table
         roomID={roomID}
         playerID={playerID}

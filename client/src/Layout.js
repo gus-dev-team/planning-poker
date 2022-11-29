@@ -6,8 +6,10 @@ const Layout = (props) => {
     <>
       <header>
         <div>
-          <h1 style={{ textDecoration: "underline" }}>
-            <Link to='/'>PlanningP&diams;ker</Link>
+          <h1>
+            <Link to='/'>
+              Planning<br></br>&diams; Poker &diams;
+            </Link>
           </h1>
         </div>
       </header>
