@@ -17,10 +17,11 @@ export default function Hand(props) {
     "?",
   ];
 
-  const seatedPlayers = props.seatedPlayers.find(
-    (player) => player.ID === props.playerID
-  );
-  const playerCard = seatedPlayers && seatedPlayers.card;
+  const seatedPlayers = props.seatedPlayers;
+  const player =
+    seatedPlayers &&
+    seatedPlayers.find((player) => player.ID === props.playerID);
+  const playerCard = player && player.card;
 
   const cards = values.map((value) => {
     return (

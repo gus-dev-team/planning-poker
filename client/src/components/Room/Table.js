@@ -101,15 +101,14 @@ function Bouncer(props) {
 }
 
 function List(props) {
+  const seatedPlayers = props.seatedPlayers;
+  const length = seatedPlayers && seatedPlayers.length;
   return (
     <ul>
-      {props.seatedPlayers.length < 1 ? (
-        <div>empty table</div>
-      ) : (
-        <div>players seated</div>
-      )}
+      <div>players seated</div>
+      {length < 1 && <div>empty table</div>}
 
-      {props.seatedPlayers.length >= 1 && // See 'conditional rendering' in javascript.
+      {length >= 1 && // See 'conditional rendering' in javascript.
         props.seatedPlayers.map((player) => {
           return (
             <li
