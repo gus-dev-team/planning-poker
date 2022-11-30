@@ -376,6 +376,13 @@ header {
   background: rgba(236, 217, 149, 1);
 }
 
+/* .card::after, */
+.card-disabled::after {
+  content: "\2666";
+  color: var(--orange1);
+  font-size: 6rem;
+}
+
 /* .card-disabled,
 .card-disabled:hover {
   color: darkgray;

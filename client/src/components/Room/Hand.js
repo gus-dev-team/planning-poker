@@ -52,7 +52,7 @@ function Card(props) {
       }}
       disabled={props.disabled}
     >
-      {props.name}
+      {!props.disabled && props.name}
     </button>
   );
 }

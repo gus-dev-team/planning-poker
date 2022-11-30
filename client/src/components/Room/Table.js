@@ -4,8 +4,11 @@ import { addPlayer, removePlayer } from "../../controllers/playerController.js";
 // import socket from "../../utils/socket.js";
 
 export default function Table(props) {
+  const [showResults, setShowResults] = useState(false);
+
   return (
     <div id='table'>
+      {showResults && <div>average: </div>}
       <List seatedPlayers={props.seatedPlayers} />
 
       <Bouncer
@@ -120,10 +123,29 @@ function List(props) {
               ) : (
                 <span className='material-icons'>radio_button_unchecked</span>
               )}
-              {player.name}
+              {player.name} {player.card && <span>{player.card}</span>}
             </li>
           );
         })}
     </ul>
   );
 }
+
+// Ideia para o futuro...
+// function MiniCard(props) {
+//   return (
+//     <button
+//       className={
+//         "card" +
+//         (props.played ? "-selected" : "") +
+//         (props.disabled ? "-disabled" : "")
+//       }
+//       onClick={() => {
+//         updateCard(props.roomID, props.playerID, props.name);
+//       }}
+//       disabled={props.disabled}
+//     >
+//       {!props.disabled && props.name}
+//     </button>
+//   );
+// }

@@ -27,7 +27,7 @@ function Room(props) {
 
     socket.on("disconnect", () => {
       // setIsConnected(false);
-      // removePlayer(roomID, playerID); // TEM QUE SER FEITO A NÍVEL DO SERVIDOR.
+      // removePlayer(roomID, playerID); // TEM QUE SER FEITO A NÍVEL DO SERVIDOR. TENHO QUE IMPLEMENTAR socket.io 'ROOMS' ...
     });
 
     socket.on("update", () => {
@@ -39,10 +39,7 @@ function Room(props) {
       socket.off("disconnect");
       socket.off("update");
     };
-  }, [
-    roomID,
-    // playedCard
-  ]);
+  }, [roomID]);
 
   async function setRoom(roomID) {
     const { data } = await axios.get(`/api/rooms/${roomID}`);
