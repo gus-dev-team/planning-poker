@@ -5,7 +5,7 @@ const pushToPlayers = async function (req, res) {
   const { ID, name } = req.body;
 
   await Room.updateOne(
-    { ID: req.params.roomID },
+    { id: req.params.roomID }, // changed ID to id
     { $push: { players: { ID, name } } }
   );
 
@@ -13,10 +13,11 @@ const pushToPlayers = async function (req, res) {
 };
 
 const pullFromPlayers = async function (req, res) {
-  console.log(req.params, req.body);
+  console.log("pullFromPlayers: ", req.params, req.body);
   const { ID } = req.body;
+  const { roomID } = req.params;
   await Room.updateOne(
-    { ID: "testing" },
+    { id: roomID }, // changed ID to id
     {
       $pull: {
         players: {
@@ -45,7 +46,7 @@ const setCard = async function (req, res) {
   // console.log(currentPlayer);
 
   await Room.updateOne(
-    { ID: req.params.ID, "players.ID": req.params.playerID },
+    { id: req.params.ID, "players.ID": req.params.playerID }, // changed ID to id
     {
       $set: {
         "players.$.card": req.body.card,

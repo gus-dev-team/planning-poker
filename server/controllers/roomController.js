@@ -16,7 +16,7 @@ const createNewRoom = async function (req, res) {
 
   // console.log("This is the new room ID...", newRoom.id);
 
-  // io.emit("update");
+  io.emit("update");
   // res.status(200).json({ success: true, data: [] });
 };
 
@@ -26,7 +26,8 @@ const getRoomData = async function (req, res) {
   try {
     const { ID } = req.params;
     const data = await Room.find({});
-    const specificRoom = data.find((room) => room.ID === ID);
+    const specificRoom = data.find((room) => room.id === ID);
+    // changed room.ID to room.id
     res.status(200).json(specificRoom);
   } catch (err) {
     console.error(err);
@@ -36,7 +37,7 @@ const getRoomData = async function (req, res) {
 const setTheme = async function (req, res) {
   console.log(req.params, req.body);
   await Room.updateOne(
-    { ID: req.params.roomID },
+    { id: req.params.roomID }, // changed ID to id
     { $set: { theme: req.body.theme } }
   );
   res.status(200).send({ success: true, data: [] });

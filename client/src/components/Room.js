@@ -10,6 +10,7 @@ import playerID from "../utils/playerID.js";
 
 function Room(props) {
   const { roomID } = useParams();
+  console.log(roomID);
 
   const [disabled, setDisabled] = useState(true);
   const [theme, setTheme] = useState("");
