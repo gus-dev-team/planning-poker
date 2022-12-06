@@ -25,7 +25,7 @@ roomsRouter.get("/", async (req, res) => {
   }
 });
 
-roomsRouter.post("/new", createNewRoom);
+roomsRouter.get("/new", createNewRoom);
 
 roomsRouter.get("/:ID", getRoomData);
 

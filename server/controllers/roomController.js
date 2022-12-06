@@ -3,19 +3,24 @@ import Room from "../models/roomModel.js";
 import io from "../server.js";
 
 const createNewRoom = async function (req, res) {
-  const { ID } = req.body;
-  const newRoom = new Room({ ID: ID });
+  const newRoom = new Room();
   await newRoom.save(function (err, result) {
     if (err) {
       console.log(err);
     } else {
       console.log(result);
+      // res.status(302).redirect(`/api/rooms/${newRoom.id}`); // doesnt work
+      res.send({ redirect: `/rooms/${newRoom.id}` });
     }
   });
 
-  io.emit("update");
-  res.status(200).json({ success: true, data: [] });
+  // console.log("This is the new room ID...", newRoom.id);
+
+  // io.emit("update");
+  // res.status(200).json({ success: true, data: [] });
 };
+
+// const deleteRoom = async function (req, res) {}
 
 const getRoomData = async function (req, res) {
   try {

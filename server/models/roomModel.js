@@ -18,10 +18,10 @@ const playerSchema = mongoose.Schema({
 
 const roomschema = mongoose.Schema(
   {
-    ID: {
-      type: String,
-      required: true,
-    },
+    // ID: {
+    //   type: String,
+    //   required: true,
+    // },
     theme: {
       type: String,
       required: true,
