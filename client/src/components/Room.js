@@ -6,11 +6,9 @@ import Hand from "./Room/Hand";
 import Table from "./Room/Table";
 import socket from "../utils/socket.js";
 import playerID from "../utils/playerID.js";
-// import { io } from "socket.io-client";
 
 function Room(props) {
   const { roomID } = useParams();
-  console.log(roomID);
 
   const [disabled, setDisabled] = useState(true);
   const [theme, setTheme] = useState("");
@@ -23,6 +21,7 @@ function Room(props) {
 
     socket.on("connect", () => {
       // setIsConnected(true);
+      socket.emit("join server room", roomID);
       setRoom(roomID);
     });
 

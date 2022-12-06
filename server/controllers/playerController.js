@@ -1,11 +1,10 @@
-import mongoose from "mongoose";
 import Room from "../models/roomModel.js";
 
 const pushToPlayers = async function (req, res) {
   const { ID, name } = req.body;
 
   await Room.updateOne(
-    { id: req.params.roomID }, // changed ID to id
+    { id: req.params.roomID },
     { $push: { players: { ID, name } } }
   );
 
@@ -13,11 +12,10 @@ const pushToPlayers = async function (req, res) {
 };
 
 const pullFromPlayers = async function (req, res) {
-  console.log("pullFromPlayers: ", req.params, req.body);
   const { ID } = req.body;
   const { roomID } = req.params;
   await Room.updateOne(
-    { id: roomID }, // changed ID to id
+    { id: roomID },
     {
       $pull: {
         players: {
@@ -46,7 +44,7 @@ const setCard = async function (req, res) {
   // console.log(currentPlayer);
 
   await Room.updateOne(
-    { id: req.params.ID, "players.ID": req.params.playerID }, // changed ID to id
+    { id: req.params.ID, "players.ID": req.params.playerID },
     {
       $set: {
         "players.$.card": req.body.card,

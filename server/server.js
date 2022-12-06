@@ -36,9 +36,17 @@ io.on("connection", (socket) => {
   });
 
   socket.on("update", () => {
-    // console.log(`update signal: ${socket.id}...`);
     io.emit("update");
   });
+
+  socket.on("join server room", (roomID) => {
+    console.log("user has joined the room", roomID);
+    socket.join(roomID);
+  });
+});
+
+io.of("/").adapter.on("create-room", (room) => {
+  console.log(`socket.io room ${room} was created`);
 });
 
 server.listen(5000, () => {

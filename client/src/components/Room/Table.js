@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { addPlayer, removePlayer } from "../../controllers/playerController.js";
-// import axios from "axios";
-// import socket from "../../utils/socket.js";
 
 export default function Table(props) {
-  const [showResults, setShowResults] = useState(false);
+  // const [showResults, setShowResults] = useState(false);
 
   return (
     <div id='table'>
-      {showResults && <div>average: </div>}
+      {/* {showResults && <div>average: </div>} */}
       <List seatedPlayers={props.seatedPlayers} />
 
       <Bouncer
