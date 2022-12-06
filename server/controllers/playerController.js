@@ -1,10 +1,13 @@
+import mongoose from "mongoose";
 import Room from "../models/roomModel.js";
 
 const pushToPlayers = async function (req, res) {
   const { ID, name } = req.body;
+  console.log(req.body, req.params);
 
-  await Room.updateOne(
-    { id: req.params.roomID },
+  await Room.findByIdAndUpdate(
+    req.params.roomID,
+    // { id: mongoose.Types.ObjectId(req.params.roomID) },
     { $push: { players: { ID, name } } }
   );
 

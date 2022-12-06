@@ -6,6 +6,7 @@ import Hand from "./Room/Hand";
 import Table from "./Room/Table";
 import socket from "../utils/socket.js";
 import playerID from "../utils/playerID.js";
+import joinSocketIORoom from "../controllers/roomController";
 
 function Room(props) {
   const { roomID } = useParams();
@@ -21,7 +22,7 @@ function Room(props) {
 
     socket.on("connect", () => {
       // setIsConnected(true);
-      socket.emit("join server room", roomID);
+      joinSocketIORoom(roomID);
       setRoom(roomID);
     });
 

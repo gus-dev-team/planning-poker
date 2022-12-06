@@ -24,29 +24,17 @@ app.get("/", (req, res) => {
   res.status(200).json({ success: true, data: [] });
 });
 
-let socketTotal = 0;
-
 io.on("connection", (socket) => {
-  socketTotal += 1;
-  console.log("Total number of sockets: ", socketTotal);
+  socket.on("disconnect", () => {});
 
-  socket.on("disconnect", () => {
-    socketTotal -= 1;
-    console.log("Total number of sockets: ", socketTotal);
+  socket.on("update", (roomID) => {
+    io.to(roomID).emit("update");
   });
 
-  socket.on("update", () => {
-    io.emit("update");
-  });
-
-  socket.on("join server room", (roomID) => {
-    console.log("user has joined the room", roomID);
+  socket.on("join socket.io room", (roomID) => {
+    console.log("User has joined the room", roomID);
     socket.join(roomID);
   });
-});
-
-io.of("/").adapter.on("create-room", (room) => {
-  console.log(`socket.io room ${room} was created`);
 });
 
 server.listen(5000, () => {
