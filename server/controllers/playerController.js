@@ -16,17 +16,14 @@ const pushToPlayers = async function (req, res) {
 
 const pullFromPlayers = async function (req, res) {
   const { ID } = req.body;
-  const { roomID } = req.params;
-  await Room.updateOne(
-    { id: roomID },
-    {
-      $pull: {
-        players: {
-          ID: ID,
-        },
+  // const { roomID } = req.params;
+  await Room.findByIdAndUpdate(req.params.roomID, {
+    $pull: {
+      players: {
+        ID: ID,
       },
-    }
-  ).exec(); // This is necessary.
+    },
+  }).exec(); // This is necessary.
 
   res.status(200).send({ success: true, data: [] });
 };

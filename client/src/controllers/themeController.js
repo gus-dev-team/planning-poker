@@ -5,7 +5,7 @@ async function updateTheme(roomID, string) {
   await axios.put(`/api/rooms/${roomID}/theme`, {
     theme: string,
   });
-  socket.to(roomID).emit("update");
+  socket.emit("update", roomID);
 }
 
 export default updateTheme;

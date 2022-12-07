@@ -6,7 +6,7 @@ import Hand from "./Room/Hand";
 import Table from "./Room/Table";
 import socket from "../utils/socket.js";
 import playerID from "../utils/playerID.js";
-import joinSocketIORoom from "../controllers/roomController";
+import joinRoom from "../controllers/roomController.js";
 
 function Room(props) {
   const { roomID } = useParams();
@@ -18,11 +18,12 @@ function Room(props) {
   // const [roundDuration, setRoundDuration] = useState(0);
 
   useEffect(() => {
+    joinRoom(roomID);
     setRoom(roomID);
 
     socket.on("connect", () => {
       // setIsConnected(true);
-      joinSocketIORoom(roomID);
+      console.log("User has stablished a connection!"); // isso aqui só é chamado se o usuário acessar o link diretamente!
       setRoom(roomID);
     });
 
@@ -32,6 +33,7 @@ function Room(props) {
     });
 
     socket.on("update", () => {
+      console.log("Roomjs update signal");
       setRoom(roomID);
     });
 
