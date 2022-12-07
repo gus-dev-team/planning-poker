@@ -27,14 +27,12 @@ app.get("/", (req, res) => {
 io.on("connection", (socket) => {
   socket.on("disconnect", () => {});
 
-  socket.on("join socket.io room", (roomID) => {
-    console.log("User has joined the room with ID", roomID);
+  socket.on("join room", (roomID) => {
     socket.join(roomID);
     io.emit("update");
   });
 
   socket.on("update", (roomID) => {
-    console.log("Server received update event!");
     io.to(roomID).emit("update");
   });
 });

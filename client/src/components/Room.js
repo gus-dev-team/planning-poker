@@ -23,7 +23,6 @@ function Room() {
 
     socket.on("connect", () => {
       // setIsConnected(true);
-      console.log("User has stablished a connection!"); // isso aqui só é chamado se o usuário acessar o link diretamente!
       setRoom(roomID);
     });
 
@@ -33,7 +32,6 @@ function Room() {
     });
 
     socket.on("update", () => {
-      console.log("Roomjs update signal");
       setRoom(roomID);
     });
 

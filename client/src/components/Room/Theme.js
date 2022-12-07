@@ -32,17 +32,17 @@ function Theme(props) {
     setIsFormVisible(false);
   }
 
-  function share() {
-    navigator.clipboard.writeText(
-      `http://localhost:3000/rooms/${props.roomID}`
-    );
-    const shareButton = document.getElementById("share");
-    shareButton.textContent =
-      "share the room with your co-workers [link copied!]";
-    setTimeout(() => {
-      shareButton.textContent = "share the room with your co-workers";
-    }, 5000);
-  }
+  // function share() {
+  //   navigator.clipboard.writeText(
+  //     `http://localhost:3000/rooms/${props.roomID}`
+  //   );
+  //   const shareButton = document.getElementById("share");
+  //   shareButton.textContent =
+  //     "share the room with your co-workers [link copied!]";
+  //   setTimeout(() => {
+  //     shareButton.textContent = "share the room with your co-workers";
+  //   }, 5000);
+  // }
 
   return (
     <>
@@ -69,8 +69,10 @@ function Theme(props) {
           <div>{props.theme}</div>
         )}
       </div>
-      <div className='room-share' onClick={share}>
-        {/* <span id='share'>share the room</span> */}
+      <div
+        className='room-share'
+        // onClick={share}
+      >
         <span className='material-icons'>edit</span>
         <span className='material-icons'>share</span>
       </div>

@@ -3,20 +3,16 @@ import Room from "../models/roomModel.js";
 
 const pushToPlayers = async function (req, res) {
   const { ID, name } = req.body;
-  console.log(req.body, req.params);
 
-  await Room.findByIdAndUpdate(
-    req.params.roomID,
-    // { id: mongoose.Types.ObjectId(req.params.roomID) },
-    { $push: { players: { ID, name } } }
-  );
+  await Room.findByIdAndUpdate(req.params.roomID, {
+    $push: { players: { ID, name } },
+  });
 
   res.status(201).send({ success: true, data: [] });
 };
 
 const pullFromPlayers = async function (req, res) {
   const { ID } = req.body;
-  // const { roomID } = req.params;
   await Room.findByIdAndUpdate(req.params.roomID, {
     $pull: {
       players: {
