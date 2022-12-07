@@ -2,11 +2,46 @@ import React, { useEffect, useState } from "react";
 import { addPlayer, removePlayer } from "../../controllers/playerController.js";
 
 export default function Table(props) {
-  // const [showResults, setShowResults] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+
+  useEffect(() => autoRevealer());
+
+  function autoRevealer() {
+    const playersChoosing = () => {
+      return props.seatedPlayers.filter((player) => player.card === "").length;
+    };
+    if (!playersChoosing() && props.seatedPlayers.length) {
+      setShowResults(true);
+    }
+  }
+
+  function computeAverage() {
+    const playedCards = props.seatedPlayers
+      // Get the card values.
+      .map((player) => {
+        if (player.card === "½") {
+          return "0.5"; // For easier number conversion.
+        }
+        return player.card;
+      })
+      // Excludes the players that did not vote or voted on "?".
+      .filter((card) => {
+        switch (card) {
+          case "":
+          case "?":
+            return false;
+
+          default:
+            return true;
+        }
+      })
+      .map((string) => Number(string));
+    return playedCards.reduce((a, b) => a + b, 0) / playedCards.length;
+  }
 
   return (
     <div id='table'>
-      {/* {showResults && <div>average: </div>} */}
+      {showResults && <div>average: {computeAverage()}</div>}
       <List seatedPlayers={props.seatedPlayers} />
 
       <Bouncer
