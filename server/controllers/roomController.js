@@ -17,10 +17,8 @@ const createNewRoom = async function (req, res) {
 
 const getRoomData = async function (req, res) {
   try {
-    const { ID } = req.params;
-    const data = await Room.find({});
-    const specificRoom = data.find((room) => room.id === ID);
-    res.status(200).json(specificRoom);
+    const room = await Room.findById(req.params.ID);
+    res.status(200).json(room);
   } catch (err) {
     console.error(err);
   }
@@ -37,10 +35,14 @@ const setTheme = async function (req, res) {
 const resetTable = async function (req, res) {
   const data = await Room.find({
     id: req.params.roomID,
-    players: { $elemMatch: { card: { $ne: 1 } } },
+    players: { $elemMatch: { card: { $ne: "" } } },
   });
-  for (const player of data[0].players) {
-    updateOneCard(req.params.roomID, player.ID, "");
+
+  const players = data[0] && data[0].players;
+  if (players) {
+    for (const player of players) {
+      await updateOneCard(req.params.roomID, player.ID, "");
+    }
   }
   res.status(200).send({ success: true, data: [] });
 };

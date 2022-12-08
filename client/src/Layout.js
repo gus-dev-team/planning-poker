@@ -1,7 +1,7 @@
 import "./App.css";
 import { Link, Outlet } from "react-router-dom";
 
-const Layout = (props) => {
+const Layout = () => {
   return (
     <>
       <header>

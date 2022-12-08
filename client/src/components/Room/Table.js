@@ -13,6 +13,8 @@ export default function Table(props) {
     };
     if (!playersChoosing() && props.seatedPlayers.length) {
       setShowResults(true);
+    } else {
+      setShowResults(false);
     }
   }
 
@@ -40,18 +42,10 @@ export default function Table(props) {
     return playedCards.reduce((a, b) => a + b, 0) / playedCards.length;
   }
 
-  function reset() {
-    resetTable(props.roomID);
-  }
-
   return (
     <div id='table'>
       {showResults && <div>average: {computeAverage()}</div>}
       <List seatedPlayers={props.seatedPlayers} />
-
-      <button className='table-buttons' onClick={reset}>
-        <span className='material-symbols-rounded'>refresh</span>
-      </button>
 
       <Bouncer
         roomID={props.roomID}
@@ -101,6 +95,11 @@ function Bouncer(props) {
     props.lock();
   }
 
+  // Reset cards to the initial state and the room's theme.
+  function reset() {
+    resetTable(props.roomID);
+  }
+
   return (
     <div>
       {isFormVisible ? (
@@ -125,10 +124,16 @@ function Bouncer(props) {
       ) : (
         <div>
           {isSeated ? (
-            <button className='table-buttons' onClick={handleClick}>
-              <span className='material-icons'>logout</span>
-              <span>leave table</span>
-            </button>
+            <div>
+              <button className='table-buttons' onClick={handleClick}>
+                <span className='material-icons'>logout</span>
+                <span>leave</span>
+              </button>
+              <button className='table-buttons' onClick={reset}>
+                <span className='material-symbols-rounded'>refresh</span>
+                <span>reset</span>
+              </button>
+            </div>
           ) : (
             <button
               id='join-table-button'

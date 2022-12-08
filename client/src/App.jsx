@@ -10,11 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={
-          <Entrance 
-            // ID={instanceID}
-            // getNewRoom={getNewRoom}
-          />}/>
+          <Route index element={<Entrance />}/>
           <Route path={`/rooms/:roomID`} element={<Room />}/>
           <Route path="*" element={<Empty />}/>
         </Route>
