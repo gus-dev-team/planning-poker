@@ -35,7 +35,7 @@ const setCard = async function (req, res) {
 };
 
 const updateOneCard = async function (roomID, playerID, card) {
-  await Room.updateOne(
+  const room = await Room.updateOne(
     { id: roomID, "players.ID": playerID },
     {
       $set: {
@@ -43,6 +43,7 @@ const updateOneCard = async function (roomID, playerID, card) {
       },
     }
   );
+  console.log("This is the room data:", room);
 };
 
 export { updateOneCard, setCard, pushToPlayers, pullFromPlayers };

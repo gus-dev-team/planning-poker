@@ -18,39 +18,16 @@ export default function Table(props) {
     }
   }
 
-  function computeAverage() {
-    const playedCards = props.seatedPlayers
-      // Get the card values.
-      .map((player) => {
-        if (player.card === "½") {
-          return "0.5"; // For easier number conversion.
-        }
-        return player.card;
-      })
-      // Excludes the players that did not vote or voted on "?".
-      .filter((card) => {
-        switch (card) {
-          case "":
-          case "?":
-            return false;
-
-          default:
-            return true;
-        }
-      })
-      .map((string) => Number(string));
-    return playedCards.reduce((a, b) => a + b, 0) / playedCards.length;
-  }
-
   return (
     <div id='table'>
-      {showResults && <div>average: {computeAverage()}</div>}
-      <List seatedPlayers={props.seatedPlayers} />
+      <List seatedPlayers={props.seatedPlayers} showResults={showResults} />
 
       <Bouncer
         roomID={props.roomID}
         playerID={props.playerID}
         lock={props.lock}
+        toggleReveal={() => setShowResults(!showResults)}
+        isShowing={showResults}
       />
     </div>
   );
@@ -100,6 +77,10 @@ function Bouncer(props) {
     resetTable(props.roomID);
   }
 
+  function reveal() {
+    props.toggleReveal();
+  }
+
   return (
     <div>
       {isFormVisible ? (
@@ -129,10 +110,17 @@ function Bouncer(props) {
                 <span className='material-icons'>logout</span>
                 <span>leave</span>
               </button>
-              <button className='table-buttons' onClick={reset}>
-                <span className='material-symbols-rounded'>refresh</span>
-                <span>reset</span>
-              </button>
+              {props.isShowing ? (
+                <button className='table-buttons' onClick={reveal}>
+                  {/* <span className='material-symbols-rounded'>refresh</span> */}
+                  <span>reveal</span>
+                </button>
+              ) : (
+                <button className='table-buttons' onClick={reset}>
+                  <span className='material-symbols-rounded'>refresh</span>
+                  <span>reset</span>
+                </button>
+              )}
             </div>
           ) : (
             <button
@@ -153,9 +141,35 @@ function Bouncer(props) {
 function List(props) {
   const seatedPlayers = props.seatedPlayers;
   const length = seatedPlayers && seatedPlayers.length;
+
+  function computeAverage() {
+    const playedCards = seatedPlayers
+      // Get the card values.
+      .map((player) => {
+        if (player.card === "½") {
+          return "0.5"; // For easier number conversion.
+        }
+        return player.card;
+      })
+      // Excludes the players that did not vote or voted on "?".
+      .filter((card) => {
+        switch (card) {
+          case "":
+          case "?":
+            return false;
+
+          default:
+            return true;
+        }
+      })
+      .map((string) => Number(string));
+    return playedCards.reduce((a, b) => a + b, 0) / playedCards.length;
+  }
+
   return (
     <ul>
       <div>players seated</div>
+      {props.showResults && <div>average: {computeAverage()}</div>}
       {length < 1 && <div>empty table</div>}
 
       {length >= 1 && // See 'conditional rendering' in javascript.
@@ -170,7 +184,10 @@ function List(props) {
               ) : (
                 <span className='material-icons'>radio_button_unchecked</span>
               )}
-              {player.name} {player.card && <span>{player.card}</span>}
+              {player.name}{" "}
+              {player.card && props.showResults && (
+                <span> has picked "{player.card}"</span>
+              )}
             </li>
           );
         })}

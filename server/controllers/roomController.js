@@ -25,10 +25,10 @@ const getRoomData = async function (req, res) {
 };
 
 const setTheme = async function (req, res) {
-  await Room.updateOne(
-    { id: req.params.roomID },
-    { $set: { theme: req.body.theme } }
-  );
+  await Room.findByIdAndUpdate(req.params.roomID, {
+    $set: { theme: req.body.theme },
+  });
+
   res.status(200).send({ success: true, data: [] });
 };
 
