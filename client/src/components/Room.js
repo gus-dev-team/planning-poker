@@ -5,11 +5,15 @@ import Theme from "./Room/Theme";
 import Hand from "./Room/Hand";
 import Table from "./Room/Table";
 import socket from "../utils/socket.js";
-import playerID from "../utils/playerID.js";
+// import playerID from "../utils/playerID.js";
 import { joinRoom } from "../controllers/roomController.js";
+import { nanoid } from "nanoid";
 
 function Room() {
-  const { roomID } = useParams();
+  const { roomID } = useParams(); // Changed 'const' to 'let' to see if the header click stops bugging.
+
+  const [playerID, setPlayerID] = useState(nanoid());
+  console.log(playerID);
 
   const [disabled, setDisabled] = useState(true);
   const [theme, setTheme] = useState("");

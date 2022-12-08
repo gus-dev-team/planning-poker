@@ -2,7 +2,7 @@ import axios from "axios";
 import socket from "../utils/socket.js";
 
 async function addPlayer(name, roomID, playerID) {
-  await axios.put(`/api/rooms/${roomID}`, {
+  const res = await axios.put(`/api/rooms/${roomID}`, {
     ID: playerID,
     name: name,
   });

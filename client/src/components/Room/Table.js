@@ -13,8 +13,6 @@ export default function Table(props) {
     };
     if (!playersChoosing() && props.seatedPlayers.length) {
       setShowResults(true);
-    } else {
-      setShowResults(false);
     }
   }
 
@@ -110,17 +108,22 @@ function Bouncer(props) {
                 <span className='material-icons'>logout</span>
                 <span>leave</span>
               </button>
-              {props.isShowing ? (
-                <button className='table-buttons' onClick={reveal}>
-                  {/* <span className='material-symbols-rounded'>refresh</span> */}
-                  <span>reveal</span>
-                </button>
-              ) : (
-                <button className='table-buttons' onClick={reset}>
-                  <span className='material-symbols-rounded'>refresh</span>
-                  <span>reset</span>
-                </button>
-              )}
+              {/* {props.isShowing ? (*/}
+              <button className='table-buttons' onClick={reveal}>
+                {props.isShowing ? (
+                  <span className='material-symbols-outlined'>visibility</span>
+                ) : (
+                  <span className='material-symbols-outlined'>
+                    visibility_off
+                  </span>
+                )}
+              </button>
+              {/* ) : ( */}
+              <button className='table-buttons' onClick={reset}>
+                <span className='material-symbols-rounded'>refresh</span>
+                <span>reset</span>
+              </button>
+              {/* )} */}
             </div>
           ) : (
             <button
