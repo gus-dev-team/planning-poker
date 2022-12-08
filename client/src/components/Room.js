@@ -6,7 +6,7 @@ import Hand from "./Room/Hand";
 import Table from "./Room/Table";
 import socket from "../utils/socket.js";
 import playerID from "../utils/playerID.js";
-import joinRoom from "../controllers/roomController.js";
+import { joinRoom } from "../controllers/roomController.js";
 
 function Room() {
   const { roomID } = useParams();

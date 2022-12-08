@@ -1,4 +1,5 @@
 import Room from "../models/roomModel.js";
+import { updateOneCard } from "./playerController.js";
 
 const createNewRoom = async function (req, res) {
   const newRoom = new Room();
@@ -33,4 +34,15 @@ const setTheme = async function (req, res) {
   res.status(200).send({ success: true, data: [] });
 };
 
-export { createNewRoom, getRoomData, setTheme };
+const resetTable = async function (req, res) {
+  const data = await Room.find({
+    id: req.params.roomID,
+    players: { $elemMatch: { card: { $ne: 1 } } },
+  });
+  for (const player of data[0].players) {
+    updateOneCard(req.params.roomID, player.ID, "");
+  }
+  res.status(200).send({ success: true, data: [] });
+};
+
+export { createNewRoom, getRoomData, setTheme, resetTable };

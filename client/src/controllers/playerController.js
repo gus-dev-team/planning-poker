@@ -6,14 +6,14 @@ async function addPlayer(name, roomID, playerID) {
     ID: playerID,
     name: name,
   });
-  socket.emit("update", roomID); //isso agora faz sentido!
+  socket.emit("update", roomID);
 }
 
 async function removePlayer(roomID, playerID) {
   await axios.delete(`/api/rooms/${roomID}`, {
     data: { ID: playerID }, // For the method axios.delete, use config.data to pass the body in the request.
   });
-  socket.emit("update", roomID); // tá rolando algum problema na criação dos socket io rooms...
+  socket.emit("update", roomID);
 }
 
 async function updateCard(roomID, playerID, card) {

@@ -1,6 +1,6 @@
 import express from "express";
 import Room from "../models/roomModel.js";
-import io from "../server.js";
+
 import {
   pushToPlayers,
   pullFromPlayers,
@@ -10,6 +10,7 @@ import {
   createNewRoom,
   getRoomData,
   setTheme,
+  resetTable,
 } from "../controllers/roomController.js";
 
 const roomsRouter = express.Router();
@@ -30,6 +31,8 @@ roomsRouter.get("/new", createNewRoom);
 roomsRouter.get("/:ID", getRoomData);
 
 roomsRouter.put("/:roomID/theme", setTheme);
+
+roomsRouter.put("/:roomID/reset", resetTable);
 
 roomsRouter.put("/:roomID", pushToPlayers);
 

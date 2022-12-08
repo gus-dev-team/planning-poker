@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import Room from "../models/roomModel.js";
 
 const pushToPlayers = async function (req, res) {
@@ -31,23 +30,19 @@ const pullFromPlayers = async function (req, res) {
 // This will act as if the player would be canceling their vote.
 // My difficulty at the momment is HOW to retrieve the current card value from the database.
 const setCard = async function (req, res) {
-  // console.log(req.params, req.body);
-
-  // const currentPlayer = await Room.findOne({
-  //   ID: req.params.ID,
-  //   players: { ID: req.params.playerID },
-  // });
-  // console.log(currentPlayer);
-
-  await Room.updateOne(
-    { id: req.params.ID, "players.ID": req.params.playerID },
-    {
-      $set: {
-        "players.$.card": req.body.card,
-      },
-    }
-  );
+  updateOneCard(req.params.ID, req.params.playerID, req.body.card);
   res.status(201).send({ success: true, data: [] });
 };
 
-export { setCard, pushToPlayers, pullFromPlayers };
+const updateOneCard = async function (roomID, playerID, card) {
+  await Room.updateOne(
+    { id: roomID, "players.ID": playerID },
+    {
+      $set: {
+        "players.$.card": card,
+      },
+    }
+  );
+};
+
+export { updateOneCard, setCard, pushToPlayers, pullFromPlayers };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { addPlayer, removePlayer } from "../../controllers/playerController.js";
+import { resetTable } from "../../controllers/roomController.js";
 
 export default function Table(props) {
   const [showResults, setShowResults] = useState(false);
@@ -39,10 +40,18 @@ export default function Table(props) {
     return playedCards.reduce((a, b) => a + b, 0) / playedCards.length;
   }
 
+  function reset() {
+    resetTable(props.roomID);
+  }
+
   return (
     <div id='table'>
       {showResults && <div>average: {computeAverage()}</div>}
       <List seatedPlayers={props.seatedPlayers} />
+
+      <button className='table-buttons' onClick={reset}>
+        <span className='material-symbols-rounded'>refresh</span>
+      </button>
 
       <Bouncer
         roomID={props.roomID}
