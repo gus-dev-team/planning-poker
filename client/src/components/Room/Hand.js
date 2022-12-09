@@ -41,7 +41,7 @@ export default function Hand(props) {
 
 function Card(props) {
   return (
-    <button
+    <div
       className={
         "card" +
         (props.played ? "-selected" : "") +
@@ -52,7 +52,9 @@ function Card(props) {
       }}
       disabled={props.disabled}
     >
-      {!props.disabled && props.name}
-    </button>
+      <div className='border-wrapper'>
+        <div className='number-wrapper'>{!props.disabled && props.name}</div>
+      </div>
+    </div>
   );
 }
