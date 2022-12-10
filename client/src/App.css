@@ -7,35 +7,16 @@
   --orange2: #cd541d;
   --red: #922637;
   --brown: #764d49;
+  --grey: #383838;
 
-  /* --darkgreen: #244e04;
-  --lightgreen: #8aa26e;
-  --beige: #f6f8e0;
-  --crimson: #b91343;
-  --darkgrey: #3c4b52;
-
-  --tyrian-purple: #58094f;
-  --tyrian-purple-80: rgb(88, 9, 79, 0.8);
-  --dark-purple: #841e62;
-  --lightning-yellow: #f3aa20;
-  --catalina-blue: #2a445e;
-  --catalina-blue-80: rgb(42, 68, 94, 0.8);
-  --blumine: #346b6d;
-
-  --black-pearl: #181e20;
-  --sherpa-blue: #02314d;
-  --sherpa-blue-transparent: rgb(2, 49, 77, 0.8);
-  --cobalt: #045c94;
-  --light-tangerine: hsl(42, 100%, 65%);
-  --tangerine: hsl(42, 100%, 60%);
-  --dark-tangerine: #ffbb1c;
-  --dark-tangerine-transparent: rgb(255, 187, 28, 0.8);
-  --solitude: #f2f4f5;
-  --dark-cyan: #049484;
-
-  --chathams-blue: #29526e;
-  --chathams-blue-darker: #1c384a;
-  --chathams-blue-darker: #387194; */
+  /* 
+  Paper color scheme used on faceup card.
+  #f6eee3 	
+	#eee7d7 	
+	#e5decf 	
+	#e5cbba 	
+	#d9bda5 
+  */
 }
 
 /* § Configs */
@@ -76,19 +57,13 @@ body {
   background: rgb(26, 58, 70);
   background: linear-gradient(
     0deg,
-    /* rgba(26, 58, 70, 1) 0%, */ var(--orange1) 0%,
+    var(--orange1) 0%,
     rgba(205, 84, 29, 1) 50%,
     rgba(146, 38, 55, 1) 100%
   );
 
   font-family: Arial, Helvetica, sans-serif;
 }
-
-/* #240002
-#6f0100
-#a53005
-#d97d0c
-#fec135 */
 
 header {
   display: flex;
@@ -253,20 +228,12 @@ header {
   padding: 0;
   list-style: none;
 
-  color: var(--darkgrey);
-
-  /* border: 1px solid; */
-  /* border-color: var(--black-pearl); */
-
   font-size: 2rem;
 }
 
 #table > ul > div {
   margin: 0;
   padding: 0.5rem 2rem;
-
-  color: var(--solitude);
-  background-color: var(--black-pearl);
 
   font-size: 2rem;
   text-transform: capitalize;
@@ -319,7 +286,6 @@ header {
 }
 
 /* § Hand */
-
 .hand {
   display: grid;
   grid-template-columns: repeat(12, 66px);
@@ -333,48 +299,46 @@ header {
   background-color: hsl(0, 0%, 100%, 0.1);
 }
 
-.card,
+/* .card-facedUp,
 .card-selected,
-.card-disabled {
+.card-facingDown */
+
+div[class^="card"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  width: 66px;
-  height: 99px;
-
-  color: rgb(39, 39, 39);
+  color: var(--red);
 
   background: #eee7d7;
-  background: linear-gradient(135deg, #f6eee3 0%, #eee7d7 50%, #e5decf 100%);
+  background: linear-gradient(135deg, #e5decf 0%, #e5cbba 50%, #d9bda5 100%);
 
   font-size: 3.5rem;
   font-family: "Abril Fatface", cursive;
   font-stretch: extra-expanded;
-  text-shadow: 1px 1px 1px var(--black-pearl);
+  text-shadow: 1px 1px 1px var(--orange2);
 
-  /* border: 1px solid; */
-  /* border-color: var(--green3); */
   border-radius: 0.75rem;
 
   box-shadow: 1px 1px 1px black;
 }
 
-.card-selected {
+.card-facingUp-selected {
   color: var(--orange2);
 
   background: #eee7d7;
   background: linear-gradient(-45deg, #f6eee3 0%, #eee7d7 50%, #e5decf 100%);
 
   border: 2px solid;
-  border-color: var(--orange2);
+  border-color: var(--red);
   border-radius: 1rem;
+
+  text-shadow: 1px 1px 1px var(--grey);
 }
 
-/* .card-disabled:hover { */
-.card:hover,
-.card-selected:hover {
+.card-facingUp:hover,
+.card-facingUp-selected:hover {
   color: var(--orange2);
 
   background: #eee7d7;
@@ -387,23 +351,22 @@ header {
   justify-content: center;
   align-items: center;
 
-  width: 44px;
-  height: 77px;
-  border: 1px solid rgb(188, 188, 188);
+  width: 55px;
+  height: 88px;
+  border: 1px solid var(--orange1);
+  border-radius: 0.5rem;
 }
 
-.card-disabled {
+.card-facingDown {
   color: #cd541d;
   background-color: var(--red);
   background: linear-gradient(225deg, var(--red) 0%, hsl(351, 59%, 26%) 100%);
 }
 
-.card-disabled .number-wrapper {
+.card-facingDown .number-wrapper {
   border: none;
-  /* background-color: var(--red); */
-  /* background: linear-gradient(225deg, var(--red) 0%, hsl(351, 59%, 26%) 100%); */
 }
-.card-disabled .number-wrapper::after {
+.card-facingDown .number-wrapper::after {
   content: "\2666";
   font-size: 6rem;
   text-shadow: -2px 0 1px #ecd995, 2px 0 1px #ecd995, -0 2px 1px #ecd995,
@@ -411,6 +374,13 @@ header {
 }
 
 @media screen and (min-width: 600px) {
+  .hand {
+    display: flex;
+    justify-content: space-around;
+    width: 80vw;
+
+    border-radius: 15px;
+  }
 }
 
 @keyframes glowing-green-red {

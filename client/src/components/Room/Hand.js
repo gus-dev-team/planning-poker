@@ -1,6 +1,7 @@
 import { updateCard } from "../../controllers/playerController.js";
+import Card from "./Card.js";
 
-export default function Hand(props) {
+function Hand(props) {
   // List of the value of each card in hand.
   const values = [
     "0",
@@ -22,16 +23,20 @@ export default function Hand(props) {
     seatedPlayers &&
     seatedPlayers.find((player) => player.ID === props.playerID);
   const playerCard = player && player.card;
+  const playerName = player && player.name;
 
   const cards = values.map((value) => {
     return (
       <Card
         key={value}
-        name={value}
-        played={value === playerCard ? true : false}
-        roomID={props.roomID}
-        playerID={props.playerID}
-        disabled={props.disabled}
+        value={value}
+        owner={playerName}
+        revealOwner={false}
+        isFacingUp={!props.disabled}
+        isSelected={value === playerCard ? true : false}
+        onClick={() => updateCard(props.roomID, props.playerID, value)}
+        width='66px'
+        height='99px'
       />
     );
   });
@@ -39,22 +44,4 @@ export default function Hand(props) {
   return <div className='hand'>{cards}</div>;
 }
 
-function Card(props) {
-  return (
-    <div
-      className={
-        "card" +
-        (props.played ? "-selected" : "") +
-        (props.disabled ? "-disabled" : "")
-      }
-      onClick={() => {
-        updateCard(props.roomID, props.playerID, props.name);
-      }}
-      disabled={props.disabled}
-    >
-      <div className='border-wrapper'>
-        <div className='number-wrapper'>{!props.disabled && props.name}</div>
-      </div>
-    </div>
-  );
-}
+export default Hand;
