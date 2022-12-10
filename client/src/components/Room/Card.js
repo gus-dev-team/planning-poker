@@ -4,17 +4,15 @@ function Card(props) {
       <div
         className={
           "card" +
-          (!props.isFacingUp ? "-facingUp" : "-facingDown") +
+          (props.isFacingUp ? "-facingUp" : "-facingDown") +
           (props.isSelected ? "-selected" : "")
         }
         onClick={props.onClick}
         disabled={props.isFacingUp}
         style={{ width: props.width, height: props.height }}
       >
-        <div className='border-wrapper'>
-          <div className='number-wrapper'>
-            {props.isFacingUp && props.value}
-          </div>
+        <div>
+          <div className='inner-border'>{props.isFacingUp && props.value}</div>
         </div>
       </div>
       {props.revealOwner ? (

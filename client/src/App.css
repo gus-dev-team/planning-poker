@@ -1,7 +1,7 @@
 :root {
-  --green1: #1a3a46;
-  --green2: #386857;
-  --green3: #738564;
+  --blue: #1a3a46;
+  --green1: #386857;
+  --green2: #738564;
   --yellow: #ecd995;
   --orange1: #e89d56;
   --orange2: #cd541d;
@@ -9,14 +9,12 @@
   --brown: #764d49;
   --grey: #383838;
 
-  /* 
-  Paper color scheme used on faceup card.
-  #f6eee3 	
-	#eee7d7 	
-	#e5decf 	
-	#e5cbba 	
-	#d9bda5 
-  */
+  /* Paper color scheme used on faceup card.*/
+  --paper1: #f6eee3;
+  --paper2: #eee7d7;
+  --paper3: #e5decf;
+  --paper4: #e5cbba;
+  --paper5: #d9bda5;
 }
 
 /* § Configs */
@@ -58,8 +56,8 @@ body {
   background: linear-gradient(
     0deg,
     var(--orange1) 0%,
-    rgba(205, 84, 29, 1) 50%,
-    rgba(146, 38, 55, 1) 100%
+    var(--orange2) 50%,
+    var(--red) 100%
   );
 
   font-family: Arial, Helvetica, sans-serif;
@@ -98,7 +96,7 @@ header {
   padding: 1rem 0;
   margin: 2rem auto;
 
-  background-color: var(--green1);
+  background-color: var(--blue);
 
   border: 1px solid;
 
@@ -114,7 +112,7 @@ header {
 }
 
 .new-room-button:hover {
-  background-color: var(--green2);
+  background-color: var(--green1);
   animation: none;
 }
 
@@ -166,7 +164,7 @@ header {
   margin: 0 auto;
 
   color: var(--orange1);
-  background-color: var(--green1);
+  background-color: var(--blue);
 
   font-family: "PT Sans", sans-serif;
   font-size: 2.4rem;
@@ -221,7 +219,7 @@ header {
   border-color: var(--yellow);
   border-radius: 50%;
 
-  box-shadow: var(--green1) 2px 2px 3px;
+  box-shadow: var(--blue) 2px 2px 3px;
 }
 
 #table ul {
@@ -264,7 +262,7 @@ header {
   margin: 2rem 1rem;
 
   color: var(--yellow);
-  background-color: var(--green1);
+  background-color: var(--blue);
 
   border: 1px solid;
 
@@ -324,28 +322,7 @@ div[class^="card"] {
   box-shadow: 1px 1px 1px black;
 }
 
-.card-facingUp-selected {
-  color: var(--orange2);
-
-  background: #eee7d7;
-  background: linear-gradient(-45deg, #f6eee3 0%, #eee7d7 50%, #e5decf 100%);
-
-  border: 2px solid;
-  border-color: var(--red);
-  border-radius: 1rem;
-
-  text-shadow: 1px 1px 1px var(--grey);
-}
-
-.card-facingUp:hover,
-.card-facingUp-selected:hover {
-  color: var(--orange2);
-
-  background: #eee7d7;
-  background: linear-gradient(-45deg, #f6eee3 0%, #eee7d7 50%, #e5decf 100%);
-}
-
-.number-wrapper {
+div[class^="card"] .inner-border {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -357,58 +334,82 @@ div[class^="card"] {
   border-radius: 0.5rem;
 }
 
-.card-facingDown {
-  color: #cd541d;
+div[class$="facingUp-selected"] {
+  color: var(--orange2);
+
+  border: 6px solid;
+  border-color: var(--orange2);
+  border-radius: 1rem;
+
+  text-shadow: 1px 1px 1px var(--grey);
+}
+
+div[class*="facingUp"]:hover {
+  color: var(--orange2);
+
+  background: #eee7d7;
+  background: linear-gradient(-45deg, #f6eee3 0%, #eee7d7 50%, #e5decf 100%);
+}
+
+div[class*="facingDown"] {
+  color: var(--orange2);
+
   background-color: var(--red);
   background: linear-gradient(225deg, var(--red) 0%, hsl(351, 59%, 26%) 100%);
 }
 
-.card-facingDown .number-wrapper {
+/* div[class*="facingDown"] .inner-border {
   border: none;
-}
-.card-facingDown .number-wrapper::after {
+} */
+
+div[class*="facingDown"] .inner-border::after {
+  position: relative;
+  bottom: 4px; /* Centralizing the diamong */
+
   content: "\2666";
+
   font-size: 6rem;
+
   text-shadow: -2px 0 1px #ecd995, 2px 0 1px #ecd995, -0 2px 1px #ecd995,
     0 -2px 1px #ecd995;
 }
 
 @media screen and (min-width: 600px) {
-  .hand {
+  /* .hand {
     display: flex;
     justify-content: space-around;
     width: 80vw;
 
     border-radius: 15px;
-  }
+  } */
 }
 
 @keyframes glowing-green-red {
   0% {
-    background-color: var(--green1);
-    box-shadow: 0 0 3px var(--green1);
+    background-color: var(--blue);
+    box-shadow: 0 0 3px var(--blue);
   }
   50% {
     background-color: var(--red);
     box-shadow: 0 0 10px var(--red);
   }
   100% {
-    background-color: var(--green1);
-    box-shadow: 0 0 3px var(--green1);
+    background-color: var(--blue);
+    box-shadow: 0 0 3px var(--blue);
   }
 }
 
 @keyframes glowing-green {
   0% {
-    background-color: var(--green1);
-    box-shadow: 0 0 3px var(--green1);
+    background-color: var(--blue);
+    box-shadow: 0 0 3px var(--blue);
   }
   50% {
-    background-color: var(--green2);
-    box-shadow: 0 0 10px var(--green2);
+    background-color: var(--green1);
+    box-shadow: 0 0 10px var(--green1);
   }
   100% {
-    background-color: var(--green1);
-    box-shadow: 0 0 3px var(--green1);
+    background-color: var(--blue);
+    box-shadow: 0 0 3px var(--blue);
   }
 }
