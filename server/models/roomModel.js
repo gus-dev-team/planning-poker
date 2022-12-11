@@ -18,10 +18,6 @@ const playerSchema = mongoose.Schema({
 
 const roomschema = mongoose.Schema(
   {
-    // ID: {
-    //   type: String,
-    //   required: true,
-    // },
     theme: {
       type: String,
       required: true,
@@ -31,6 +27,11 @@ const roomschema = mongoose.Schema(
       type: Number,
       required: true,
       default: 3600,
+    },
+    isHidden: {
+      type: Boolean,
+      required: true,
+      default: true,
     },
     players: [playerSchema],
     default: [],

@@ -1,5 +1,6 @@
 import { updateCard } from "../../controllers/playerController.js";
 import Card from "./Card.js";
+import { autoRevealer } from "../../controllers/roomController.js";
 
 function Hand(props) {
   // List of the value of each card in hand.
@@ -34,7 +35,10 @@ function Hand(props) {
         revealOwner={false}
         isFacingUp={!props.disabled}
         isSelected={value === playerCard ? true : false}
-        onClick={() => updateCard(props.roomID, props.playerID, value)}
+        onClick={async () => {
+          await updateCard(props.roomID, props.playerID, value);
+          autoRevealer(props.roomID, props.seatedPlayers);
+        }}
         width='66px'
         height='99px'
       />

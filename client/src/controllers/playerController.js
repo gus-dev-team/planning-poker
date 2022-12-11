@@ -1,8 +1,9 @@
 import axios from "axios";
 import socket from "../utils/socket.js";
+import { checkEmptyness } from "./roomController.js";
 
 async function addPlayer(name, roomID, playerID) {
-  const res = await axios.put(`/api/rooms/${roomID}`, {
+  await axios.put(`/api/rooms/${roomID}`, {
     ID: playerID,
     name: name,
   });

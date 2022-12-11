@@ -1,32 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { addPlayer, removePlayer } from "../../controllers/playerController.js";
-import { resetTable } from "../../controllers/roomController.js";
+import {
+  checkEmptyness,
+  resetTable,
+  setIsHidden,
+} from "../../controllers/roomController.js";
 
 export default function Table(props) {
-  const [showResults, setShowResults] = useState(false);
-
-  useEffect(() => autoRevealer());
-
-  function autoRevealer() {
-    const playersChoosing = () => {
-      return props.seatedPlayers.filter((player) => player.card === "").length;
-    };
-    if (!playersChoosing() && props.seatedPlayers.length) {
-      setShowResults(true);
-    }
-  }
-
   return (
     <div id='table'>
-      <List seatedPlayers={props.seatedPlayers} showResults={showResults} />
+      <List seatedPlayers={props.seatedPlayers} showResults={!props.isHidden} />
+
+      <Admin roomID={props.roomID} isHidden={props.isHidden} />
 
       <Bouncer
         roomID={props.roomID}
         playerID={props.playerID}
         lock={props.lock}
-        toggleReveal={() => setShowResults(!showResults)}
-        isShowing={showResults}
       />
+    </div>
+  );
+}
+
+function Admin(props) {
+  // Reset cards to the initial state and the room's theme.
+  function handleReset() {
+    setIsHidden(props.roomID, true);
+    resetTable(props.roomID);
+  }
+
+  function handleReveal() {
+    setIsHidden(props.roomID, !props.isHidden);
+  }
+
+  return (
+    <div>
+      <button className='table-buttons' onClick={handleReveal}>
+        {props.isHidden ? (
+          <span className='material-symbols-outlined'>visibility</span>
+        ) : (
+          <span className='material-symbols-outlined'>visibility_off</span>
+        )}
+      </button>
+
+      <button className='table-buttons' onClick={handleReset}>
+        <span className='material-symbols-rounded'>refresh</span>
+        <span>reset</span>
+      </button>
     </div>
   );
 }
@@ -49,7 +69,7 @@ function Bouncer(props) {
     setName(e.target.value);
   }
 
-  async function handleSubmit(e) {
+  async function handleJoin(e) {
     e.preventDefault(); // Prevents page redirection.
     addPlayer(name, props.roomID, props.playerID);
     setName("");
@@ -58,31 +78,32 @@ function Bouncer(props) {
     props.lock();
   }
 
-  function handleReset() {
+  function handleCancelation() {
     setName("");
     setIsFormVisible(!isFormVisible);
   }
 
   // Removes the player.
-  function handleClick() {
+  function handleLeave() {
     removePlayer(props.roomID, props.playerID);
+    checkEmptyness(props.roomID, props.seatedPlayers);
     setIsSeated(!isSeated);
     props.lock();
   }
 
-  // Reset cards to the initial state and the room's theme.
-  function reset() {
-    resetTable(props.roomID);
-  }
+  // // Reset cards to the initial state and the room's theme.
+  // function reset() {
+  //   resetTable(props.roomID);
+  // }
 
-  function reveal() {
-    props.toggleReveal();
-  }
+  // function reveal() {
+  //   props.toggleReveal();
+  // }
 
   return (
     <div>
       {isFormVisible ? (
-        <form onSubmit={handleSubmit} onReset={handleReset}>
+        <form onSubmit={handleJoin} onReset={handleCancelation}>
           <input
             type='text'
             id='name-input'
@@ -104,12 +125,12 @@ function Bouncer(props) {
         <div>
           {isSeated ? (
             <div>
-              <button className='table-buttons' onClick={handleClick}>
+              <button className='table-buttons' onClick={handleLeave}>
                 <span className='material-icons'>logout</span>
                 <span>leave</span>
               </button>
-              {/* {props.isShowing ? (*/}
-              <button className='table-buttons' onClick={reveal}>
+
+              {/* <button className='table-buttons' onClick={reveal}>
                 {props.isShowing ? (
                   <span className='material-symbols-outlined'>visibility</span>
                 ) : (
@@ -118,12 +139,11 @@ function Bouncer(props) {
                   </span>
                 )}
               </button>
-              {/* ) : ( */}
+              
               <button className='table-buttons' onClick={reset}>
                 <span className='material-symbols-rounded'>refresh</span>
                 <span>reset</span>
-              </button>
-              {/* )} */}
+              </button> */}
             </div>
           ) : (
             <button

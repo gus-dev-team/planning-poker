@@ -11,6 +11,7 @@ import {
   getRoomData,
   setTheme,
   resetTable,
+  setIsHidden,
 } from "../controllers/roomController.js";
 
 const roomsRouter = express.Router();
@@ -33,6 +34,8 @@ roomsRouter.get("/:ID", getRoomData);
 roomsRouter.put("/:roomID/theme", setTheme);
 
 roomsRouter.put("/:roomID/reset", resetTable);
+
+roomsRouter.put("/:roomID/hidden", setIsHidden);
 
 roomsRouter.put("/:roomID", pushToPlayers);
 

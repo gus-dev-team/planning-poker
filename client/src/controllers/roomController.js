@@ -10,4 +10,28 @@ async function resetTable(roomID) {
   socket.emit("update", roomID);
 }
 
-export { joinRoom, resetTable };
+async function setIsHidden(roomID, boolean) {
+  await axios.put(`/api/rooms/${roomID}/hidden`, {
+    isHidden: boolean,
+  });
+  socket.emit("update", roomID);
+}
+
+function autoRevealer(roomID, seatedPlayers) {
+  const playersChoosing = () => {
+    return seatedPlayers.filter((player) => player.card === "").length;
+  };
+  console.log(playersChoosing());
+  if (!playersChoosing() && seatedPlayers.length) {
+    setIsHidden(roomID, false);
+  }
+  socket.emit("update", roomID);
+}
+
+function checkEmptyness(roomID, seatedPlayers) {
+  if (typeof seatedPlayers === "undefined" || seatedPlayers.length < 1)
+    setIsHidden(roomID, true);
+  socket.emit("update", roomID);
+}
+
+export { joinRoom, resetTable, setIsHidden, autoRevealer, checkEmptyness };

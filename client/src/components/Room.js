@@ -18,6 +18,7 @@ function Room() {
   const [disabled, setDisabled] = useState(true);
   const [theme, setTheme] = useState("");
   const [seatedPlayers, setSeatedPlayers] = useState([]);
+  const [isHidden, setIsHidden] = useState(true);
   // const [isConnected, setIsConnected] = useState(socket.connected);
   // const [roundDuration, setRoundDuration] = useState(0);
 
@@ -50,6 +51,7 @@ function Room() {
     const { data } = await axios.get(`/api/rooms/${roomID}`);
     setTheme(data.theme);
     setSeatedPlayers(data.players);
+    setIsHidden(data.isHidden);
     // setRoundDuration(data.time);
   }
 
@@ -62,6 +64,8 @@ function Room() {
         playerID={playerID}
         seatedPlayers={seatedPlayers}
         lock={() => setDisabled(!disabled)}
+        isHidden={isHidden}
+        // setIsHidden={() => setIsHidden(!isHidden)} // Tem que chamar o server na verdade... WARNING DONT FORGET THISSSS AAAAAHHHH
       />
       <Hand
         roomID={roomID}

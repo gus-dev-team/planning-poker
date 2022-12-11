@@ -43,7 +43,7 @@ const updateOneCard = async function (roomID, playerID, card) {
       },
     }
   );
-  console.log("This is the room data:", room); // This data is weird.
+  // console.log("This is the room data:", room); // This data is weird.
 };
 
 export { updateOneCard, setCard, pushToPlayers, pullFromPlayers };

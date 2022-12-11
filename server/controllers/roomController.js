@@ -47,4 +47,11 @@ const resetTable = async function (req, res) {
   res.status(200).send({ success: true, data: [] });
 };
 
-export { createNewRoom, getRoomData, setTheme, resetTable };
+const setIsHidden = async function (req, res) {
+  await Room.findByIdAndUpdate(req.params.roomID, {
+    $set: { isHidden: req.body.isHidden },
+  });
+  res.status(200).send({ success: true, data: [] });
+};
+
+export { createNewRoom, getRoomData, setTheme, resetTable, setIsHidden };
