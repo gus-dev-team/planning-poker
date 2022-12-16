@@ -11,7 +11,9 @@ export default function Table(props) {
     <div id='table'>
       <List seatedPlayers={props.seatedPlayers} showResults={!props.isHidden} />
 
-      <Admin roomID={props.roomID} isHidden={props.isHidden} />
+      {!props.disabled && (
+        <Admin roomID={props.roomID} isHidden={props.isHidden} />
+      )}
 
       <Bouncer
         roomID={props.roomID}
@@ -129,21 +131,6 @@ function Bouncer(props) {
                 <span className='material-icons'>logout</span>
                 <span>leave</span>
               </button>
-
-              {/* <button className='table-buttons' onClick={reveal}>
-                {props.isShowing ? (
-                  <span className='material-symbols-outlined'>visibility</span>
-                ) : (
-                  <span className='material-symbols-outlined'>
-                    visibility_off
-                  </span>
-                )}
-              </button>
-              
-              <button className='table-buttons' onClick={reset}>
-                <span className='material-symbols-rounded'>refresh</span>
-                <span>reset</span>
-              </button> */}
             </div>
           ) : (
             <button
@@ -151,7 +138,6 @@ function Bouncer(props) {
               className='table-buttons'
               onClick={() => setIsFormVisible(!isFormVisible)}
             >
-              {/* <span className='material-icons'>login</span> */}
               <span>join table</span>
             </button>
           )}

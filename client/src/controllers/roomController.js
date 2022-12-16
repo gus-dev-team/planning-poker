@@ -1,7 +1,7 @@
 import axios from "axios";
 import socket from "../utils/socket.js";
 
-function joinRoom(roomID) {
+function joinServerRoom(roomID) {
   socket.emit("join room", roomID);
 }
 
@@ -34,4 +34,10 @@ function checkEmptyness(roomID, seatedPlayers) {
   socket.emit("update", roomID);
 }
 
-export { joinRoom, resetTable, setIsHidden, autoRevealer, checkEmptyness };
+export {
+  joinServerRoom,
+  resetTable,
+  setIsHidden,
+  autoRevealer,
+  checkEmptyness,
+};

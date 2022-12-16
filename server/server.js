@@ -29,7 +29,6 @@ io.on("connection", (socket) => {
 
   socket.on("join room", (roomID) => {
     socket.join(roomID);
-    io.emit("update");
   });
 
   socket.on("update", (roomID) => {

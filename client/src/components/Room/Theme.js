@@ -44,6 +44,12 @@ function Theme(props) {
   //   }, 5000);
   // }
 
+  function copyToClipboard() {
+    navigator.clipboard.writeText(
+      `http://localhost:3000/rooms/${props.roomID}`
+    );
+  }
+
   return (
     <>
       <div
@@ -69,10 +75,7 @@ function Theme(props) {
           <div>{props.theme}</div>
         )}
       </div>
-      <div
-        className='room-share'
-        // onClick={share}
-      >
+      <div className='room-share' onClick={copyToClipboard}>
         <span className='material-icons'>edit</span>
         <span className='material-icons'>share</span>
       </div>

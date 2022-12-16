@@ -5,15 +5,14 @@ import Theme from "./Room/Theme";
 import Hand from "./Room/Hand";
 import Table from "./Room/Table";
 import socket from "../utils/socket.js";
-// import playerID from "../utils/playerID.js";
-import { joinRoom } from "../controllers/roomController.js";
+import { joinServerRoom } from "../controllers/roomController.js";
 import { nanoid } from "nanoid";
 
 function Room() {
-  const { roomID } = useParams(); // Changed 'const' to 'let' to see if the header click stops bugging.
+  const { roomID } = useParams();
 
   const [playerID, setPlayerID] = useState(nanoid());
-  console.log(playerID);
+  console.log(playerID); // For some reason, when the user first hits the page, they receive a first nanoid, then a second overwrites it and does not change after.
 
   const [disabled, setDisabled] = useState(true);
   const [theme, setTheme] = useState("");
@@ -23,7 +22,7 @@ function Room() {
   // const [roundDuration, setRoundDuration] = useState(0);
 
   useEffect(() => {
-    joinRoom(roomID);
+    joinServerRoom(roomID);
     setRoom(roomID);
 
     socket.on("connect", () => {
@@ -33,7 +32,7 @@ function Room() {
 
     socket.on("disconnect", () => {
       // setIsConnected(false);
-      // removePlayer(roomID, playerID); // TEM QUE SER FEITO A NÍVEL DO SERVIDOR. TENHO QUE IMPLEMENTAR socket.io 'ROOMS' ...
+      // removePlayer(roomID, playerID); // TEM QUE SER FEITO A NÍVEL DO SERVIDOR.
     });
 
     socket.on("update", () => {
@@ -63,9 +62,9 @@ function Room() {
         roomID={roomID}
         playerID={playerID}
         seatedPlayers={seatedPlayers}
+        disabled={disabled}
         lock={() => setDisabled(!disabled)}
         isHidden={isHidden}
-        // setIsHidden={() => setIsHidden(!isHidden)} // Tem que chamar o server na verdade... WARNING DONT FORGET THISSSS AAAAAHHHH
       />
       <Hand
         roomID={roomID}
