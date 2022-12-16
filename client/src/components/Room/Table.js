@@ -59,9 +59,11 @@ function Bouncer(props) {
 
   // Focus on the input field after clicking "join table".
   useEffect(() => {
-    if (isFormVisible && document.getElementById("name-input")) {
+    const nameInput = document.getElementById("name-input");
+
+    if (isFormVisible && nameInput) {
       (function () {
-        document.getElementById("name-input").focus();
+        nameInput.focus();
       })();
     }
   }, [isFormVisible]);

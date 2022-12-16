@@ -7,9 +7,11 @@ function Theme(props) {
 
   // Focus on the input field after clicking to edit the room's theme.
   useEffect(() => {
-    if (isFormVisible && document.getElementById("theme-input")) {
+    const themeInput = document.getElementById("theme-input");
+
+    if (isFormVisible && themeInput) {
       (function () {
-        document.getElementById("theme-input").focus();
+        themeInput.focus();
       })();
     }
   }, [isFormVisible]);
