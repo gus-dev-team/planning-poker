@@ -1,7 +1,33 @@
-import "./styles/Hand.css";
+import "../../App.css";
 
-function Hand() {
-  return <div>Hand</div>;
+export default function Hand(props) {
+  // List of the value of each card in hand.
+  const values = [
+    "0",
+    "½",
+    "1",
+    "2",
+    "3",
+    "5",
+    "8",
+    "13",
+    "20",
+    "40",
+    "99",
+    "?",
+  ];
+
+  const cards = values.map((value) => {
+    return <Card key={value} name={value} play={props.play} />;
+  });
+
+  return <div className='hand'>{cards}</div>;
 }
 
-export default Hand;
+function Card(props) {
+  return (
+    <button className='card' onClick={() => props.play(props.name)}>
+      {props.name}
+    </button>
+  );
+}
