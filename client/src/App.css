@@ -297,10 +297,6 @@ header {
   background-color: hsl(0, 0%, 100%, 0.1);
 }
 
-/* .card-facedUp,
-.card-selected,
-.card-facingDown */
-
 div[class^="card"] {
   display: flex;
   flex-direction: column;
@@ -358,13 +354,9 @@ div[class*="facingDown"] {
   background: linear-gradient(225deg, var(--red) 0%, hsl(351, 59%, 26%) 100%);
 }
 
-/* div[class*="facingDown"] .inner-border {
-  border: none;
-} */
-
 div[class*="facingDown"] .inner-border::after {
   position: relative;
-  bottom: 4px; /* Centralizing the diamong */
+  bottom: 4px; /* Centralizing the diamond */
 
   content: "\2666";
 
@@ -375,13 +367,7 @@ div[class*="facingDown"] .inner-border::after {
 }
 
 @media screen and (min-width: 600px) {
-  /* .hand {
-    display: flex;
-    justify-content: space-around;
-    width: 80vw;
-
-    border-radius: 15px;
-  } */
+  /* To be written... */
 }
 
 @keyframes glowing-green-red {

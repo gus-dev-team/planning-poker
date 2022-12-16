@@ -13,6 +13,7 @@ const createNewRoom = async function (req, res) {
   });
 };
 
+// A feature to be added...
 // const deleteRoom = async function (req, res) {}
 
 const getRoomData = async function (req, res) {

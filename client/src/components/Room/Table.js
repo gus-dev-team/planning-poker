@@ -25,7 +25,6 @@ export default function Table(props) {
 }
 
 function Admin(props) {
-  // Reset cards to the initial state and the room's theme.
   function handleReset() {
     setIsHidden(props.roomID, true);
     resetTable(props.roomID);
@@ -85,22 +84,12 @@ function Bouncer(props) {
     setIsFormVisible(!isFormVisible);
   }
 
-  // Removes the player.
   function handleLeave() {
     removePlayer(props.roomID, props.playerID);
     checkEmptyness(props.roomID, props.seatedPlayers);
     setIsSeated(!isSeated);
     props.lock();
   }
-
-  // // Reset cards to the initial state and the room's theme.
-  // function reset() {
-  //   resetTable(props.roomID);
-  // }
-
-  // function reveal() {
-  //   props.toggleReveal();
-  // }
 
   return (
     <div>
@@ -181,7 +170,7 @@ function List(props) {
       {props.showResults && <div>average: {computeAverage()}</div>}
       {length < 1 && <div>empty table</div>}
 
-      {length >= 1 && // See 'conditional rendering' in javascript.
+      {length >= 1 &&
         props.seatedPlayers.map((player) => {
           return (
             <li
@@ -203,22 +192,3 @@ function List(props) {
     </ul>
   );
 }
-
-// Ideia para o futuro...
-// function MiniCard(props) {
-//   return (
-//     <button
-//       className={
-//         "card" +
-//         (props.played ? "-selected" : "") +
-//         (props.disabled ? "-disabled" : "")
-//       }
-//       onClick={() => {
-//         updateCard(props.roomID, props.playerID, props.name);
-//       }}
-//       disabled={props.disabled}
-//     >
-//       {!props.disabled && props.name}
-//     </button>
-//   );
-// }

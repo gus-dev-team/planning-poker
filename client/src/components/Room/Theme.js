@@ -5,14 +5,13 @@ function Theme(props) {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [string, setString] = useState("");
 
+  // Focus on the input field after clicking to edit the room's theme.
   useEffect(() => {
     if (isFormVisible && document.getElementById("theme-input")) {
       (function () {
         document.getElementById("theme-input").focus();
       })();
     }
-    // When the timer is running, the page renders every second.
-    // The second parameter here is to prevent the focus being stuck on the input element.
   }, [isFormVisible]);
 
   function enableForm() {
@@ -31,18 +30,6 @@ function Theme(props) {
     setString("");
     setIsFormVisible(false);
   }
-
-  // function share() {
-  //   navigator.clipboard.writeText(
-  //     `http://localhost:3000/rooms/${props.roomID}`
-  //   );
-  //   const shareButton = document.getElementById("share");
-  //   shareButton.textContent =
-  //     "share the room with your co-workers [link copied!]";
-  //   setTimeout(() => {
-  //     shareButton.textContent = "share the room with your co-workers";
-  //   }, 5000);
-  // }
 
   function copyToClipboard() {
     navigator.clipboard.writeText(
