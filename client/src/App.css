@@ -188,7 +188,7 @@ header {
 }
 
 .theme input {
-  font-size: 0.8rem;
+  font-size: 2.4rem;
   text-align: center;
 
   border-bottom: 1px solid;
@@ -223,10 +223,14 @@ header {
 }
 
 #table ul {
-  padding: 0;
+  padding: 0 6vw;
+  margin: 0 auto;
   list-style: none;
 
+  overflow-y: auto;
+
   font-size: 2rem;
+  text-align: center;
 }
 
 #table > ul > div {
@@ -240,19 +244,57 @@ header {
 }
 
 #table li {
-  padding-left: 1.5rem;
-
-  color: var(--solitude);
-
-  font-size: 1.5rem;
+  display: inline-block;
+  vertical-align: top;
+  padding: 1rem;
 }
 
-#table li:nth-child(odd) {
-  background: var(--cobalt);
+#table div[class^="card"] .inner-border {
+  width: 35px;
+  height: 57px;
+
+  border-radius: 0.25rem;
+
+  font-size: 26px;
 }
 
-#table li:nth-child(even) {
-  background: var(--sherpa-blue);
+#table div[class$="facingUp-selected"] {
+  color: var(--orange2);
+
+  border: 2px solid;
+  border-color: var(--orange2);
+  border-radius: 0.5rem;
+
+  text-shadow: 1px 1px 1px var(--grey);
+}
+
+#table div[class*="facingDown"] .inner-border::after {
+  position: relative;
+  bottom: 5px; /* Centralizing the diamond */
+
+  content: "\2666";
+
+  font-size: 5rem;
+
+  text-shadow: -2px 0 1px #ecd995, 2px 0 1px #ecd995, -0 2px 1px #ecd995,
+    0 -2px 1px #ecd995;
+}
+
+#table .still-choosing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed;
+  border-color: #ecd995;
+  width: 44px;
+  height: 66px;
+}
+
+#table .owner {
+  padding: 5px 0;
+  text-transform: lowercase;
+  font-size: 1.4rem;
 }
 
 .table-buttons {

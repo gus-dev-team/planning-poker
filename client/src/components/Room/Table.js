@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Card from "./Card.js";
 import { addPlayer, removePlayer } from "../../controllers/playerController.js";
 import {
   checkEmptyness,
@@ -180,13 +181,23 @@ function List(props) {
               key={player.ID}
             >
               {player.card ? (
-                <span className='material-icons'>check_circle</span>
+                // <span className='material-icons'>check_circle</span>
+                <Card
+                  key={player.ID}
+                  value={player.card}
+                  owner={player.name}
+                  revealOwner={true}
+                  isFacingUp={props.showResults}
+                  isSelected={true}
+                  onClick={() => {}}
+                  width='44px'
+                  height='66px'
+                />
               ) : (
-                <span className='material-icons'>radio_button_unchecked</span>
-              )}
-              {player.name}{" "}
-              {player.card && props.showResults && (
-                <span> has picked "{player.card}"</span>
+                <div>
+                  <div className='still-choosing'></div>
+                  <div className='owner'>{player.name}</div>
+                </div>
               )}
             </li>
           );

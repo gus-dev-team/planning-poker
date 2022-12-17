@@ -61,11 +61,12 @@ function Theme(props) {
             </button>
           </form>
         ) : (
-          <div>{props.theme}</div>
+          <div>
+            {props.theme} <span className='material-icons'>edit</span>
+          </div>
         )}
       </div>
       <div className='room-share' onClick={copyToClipboard}>
-        <span className='material-icons'>edit</span>
         <span className='material-icons'>share</span>
       </div>
     </>
