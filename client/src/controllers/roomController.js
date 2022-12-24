@@ -18,14 +18,20 @@ async function setIsHidden(roomID, boolean) {
 }
 
 function autoRevealer(roomID, seatedPlayers) {
-  const playersChoosing = () => {
-    return seatedPlayers.filter((player) => player.card === "").length;
-  };
-  console.log(playersChoosing());
-  if (!playersChoosing() && seatedPlayers.length) {
+  const playersChoosing = seatedPlayers.filter(
+    (player) => player.card === ""
+  ).length;
+
+  console.log(
+    "The number of players still choosing is NOT zero!",
+    playersChoosing
+  );
+
+  if (playersChoosing === 0) {
     setIsHidden(roomID, false);
+    socket.emit("update", roomID);
+    console.log("The number of players still choosing is zero!");
   }
-  socket.emit("update", roomID);
 }
 
 function checkEmptyness(roomID, seatedPlayers) {

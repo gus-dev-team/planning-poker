@@ -11,7 +11,7 @@ import { nanoid } from "nanoid";
 function Room() {
   const { roomID } = useParams();
 
-  const [playerID, setPlayerID] = useState(nanoid());
+  const [playerID] = useState(nanoid());
   console.log(playerID); // For some reason, when the user first hits the page, they receive a first nanoid, then a second overwrites it and does not change after.
 
   const [disabled, setDisabled] = useState(true);
