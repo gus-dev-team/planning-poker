@@ -4,28 +4,35 @@ function List(props) {
   const seatedPlayers = props.seatedPlayers;
   const length = seatedPlayers && seatedPlayers.length;
 
-  function computeAverage() {
-    const playedCards = seatedPlayers
-      // Get the card values.
-      .map((player) => {
-        if (player.card === "½") {
-          return "0.5"; // For easier number conversion.
-        }
-        return player.card;
-      })
-      // Excludes the players that did not vote or voted on "?".
-      .filter((card) => {
-        switch (card) {
-          case "":
-          case "?":
-            return false;
+  function isValid(card) {
+    switch (card) {
+      case "":
+      case "?":
+        return false;
 
-          default:
-            return true;
+      default:
+        return true;
+    }
+  }
+
+  function computeAverage() {
+    const playedCards = seatedPlayers.reduce(
+      (accumulator, value) => {
+        if (isValid(value.card)) {
+          accumulator.valid += 1;
+
+          if (value.card === "½") {
+            accumulator.total += 0.5;
+          } else {
+            accumulator.total += Number(value.card);
+          }
         }
-      })
-      .map((string) => Number(string));
-    return playedCards.reduce((a, b) => a + b, 0) / playedCards.length;
+        return { total: accumulator.total, valid: accumulator.valid };
+      },
+      { total: 0, valid: 0 }
+    );
+
+    return playedCards.total / playedCards.valid;
   }
 
   return (
